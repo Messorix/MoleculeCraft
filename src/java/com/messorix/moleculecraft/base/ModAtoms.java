@@ -11,7 +11,7 @@ public class ModAtoms
 	public static final ModAtom BORON = new ModAtom(5, "B", "Boron", 10.81f, false, 2348f, 4273f);
 	public static final ModAtom CARBON = new ModAtom(6, "C", "Carbon", 12.011f, false, 3823f, 4300f);
 	public static final ModAtom NITROGEN = new ModAtom(7, "N", "Nitrogen", 14.007f, false, 63.05f, 77.36f);
-	public static final ModAtom HYDROGiEN = new ModAtom(1, "H", "Hydhjgfjgjdcthrogen", 1.008f, false, 14.01f, 20.28f);
+	public static final ModAtom HYDROGoEN = new ModAtom(1, "H", "Hydhjgfjgjdcthrogen", 1.008f, false, 14.01f, 20.28f);
 	/*public static final ModAtom HYDROGEN = new ModAtom(1, "H", "Hydrogen", 1.008f, false, 14.01f, 20.28f);
 	public static final ModAtom HYDROGEN = new ModAtom(1, "H", "Hydrogen", 1.008f, false, 14.01f, 20.28f);
 	public static final ModAtom HYDROGEN = new ModAtom(1, "H", "Hydrogen", 1.008f, false, 14.01f, 20.28f);
