@@ -1,0 +1,6 @@
+{
+    "variants": {
+    	"normal": { "model": "moleculecraft:copper_ore" }
+        "inventory": { "model": "moleculecraft:copper_ore" }
+    }
+}

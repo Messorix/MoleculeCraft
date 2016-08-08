@@ -1,0 +1,16 @@
+//Creative Tabs
+itemGroup.MoleculeCraft Base=MoleculeCraft
+
+//Items
+item.copper_ingot.name=Copper Ingot
+item.copper_dust.name=Copper Dust
+
+//Ores
+tile.copper_ore.name=Copper Ore
+
+//Machines
+tile.flux_furnace.name=Flux Furnace
+tile.flux_grinder.name=Flux Grinder
+
+//Containers
+container.tile_entity_flux_grinder.name=Flux Grinder
