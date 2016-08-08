@@ -2,33 +2,59 @@ package com.messorix.moleculecraft.base.classes;
 
 import javax.annotation.Generated;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 @Generated("org.jsonschema2pojo")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ModAtom {
 
+	@JsonProperty("atomicNumber")
 	private int ATOMNUMBER;
+
+	@JsonProperty("symbol")
 	private String SYMBOL;
+	
+	@JsonProperty("name")
 	private String NAME;
-	private String ATOMICMASS;
+
+	@JsonProperty("atomicMass")
+	private float ATOMICMASS;
+
+	@JsonProperty("meltingPoint")
 	private float MELTINGPOINT;
+
+	@JsonProperty("boilingPoint")
 	private float BOILINGPOINT;
 
+	@JsonProperty("radioActive")
 	public boolean RADIOACTIVE;
 
 	public ModAtom()
 	{
 		
 	}
+		
 	
-	public ModAtom(int atomNum, String symbol, String name, String weight, boolean ra, float mp, float bp) {
-		ATOMNUMBER = atomNum;
-		SYMBOL = symbol;
-		NAME = name;
-		ATOMICMASS = weight;
-		RADIOACTIVE = ra;
-		MELTINGPOINT = mp;
-		BOILINGPOINT = bp;
+	/**
+	 * 
+	 * @return The atomicNumber
+	 */
+	public ModAtom setRadioActive(boolean radioActive) {
+		this.RADIOACTIVE = radioActive;
+		return this;
+	}
+	
+	
+	/**
+	 * 
+	 * @return The atomicNumber
+	 */
+	public boolean getRadioActive() {
+		return RADIOACTIVE;
 	}
 
+	
 	/**
 	 * 
 	 * @return The atomicNumber
@@ -57,7 +83,7 @@ public class ModAtom {
 	 * 
 	 * @return The atomicMass
 	 */
-	public String getAtomicMass() {
+	public float getAtomicMass() {
 		return ATOMICMASS;
 	}
 
