@@ -24,7 +24,7 @@ public class MoleculecraftBase
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
 
-    public static ModAtoms ATOMS = new ModAtoms(); 
+    public static ModAtoms atoms = new ModAtoms(); 
     public static ModBlocks blocks = new ModBlocks();
     public static ModItems items = new ModItems();
     public static ModRecipes recipes = new ModRecipes();
