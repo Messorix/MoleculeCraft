@@ -11,6 +11,8 @@ import java.util.Map;
 public abstract class BlockOre extends Block
 {
 	public static String NAME;
+	
+	@SuppressWarnings("rawtypes")
 	public static Map MOLECULE = Maps.newHashMap();
 	
     public BlockOre(String unlocalizedName, String registryName, Material material) 

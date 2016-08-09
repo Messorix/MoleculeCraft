@@ -9,8 +9,12 @@ import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 
 public class ModRecipes {
-    private final Map processingList = Maps.newHashMap();
-    private final Map experienceList = Maps.newHashMap();
+	
+    @SuppressWarnings("rawtypes")
+	private final Map processingList = Maps.newHashMap();
+    
+    @SuppressWarnings("rawtypes")
+	private final Map experienceList = Maps.newHashMap();
     
     private static final ModRecipes processingBase = new ModRecipes();
     /** The list of grinding results. */
@@ -20,7 +24,8 @@ public class ModRecipes {
         return processingBase;
     }
     
-    public void addProcessingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
+    @SuppressWarnings("unchecked")
+	public void addProcessingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
     {
         processingList.put(parItemStackIn, parItemStackOut);
         experienceList.put(parItemStackOut, Float.valueOf(parExperience));
@@ -29,7 +34,8 @@ public class ModRecipes {
     /**
      * Returns the Processing result of an item.
      */
-    public ItemStack getProcessingResult(ItemStack parItemStack)
+    @SuppressWarnings("rawtypes")
+	public ItemStack getProcessingResult(ItemStack parItemStack)
     {
         Iterator iterator = processingList.entrySet().iterator();
         Entry entry;
@@ -57,12 +63,14 @@ public class ModRecipes {
               .getMetadata());
     }
 
-    public Map getProcessingList()
+    @SuppressWarnings("rawtypes")
+	public Map getProcessingList()
     {
         return processingList;
     }
 
-    public float getProcessingExperience(ItemStack parItemStack)
+    @SuppressWarnings("rawtypes")
+	public float getProcessingExperience(ItemStack parItemStack)
     {
         Iterator iterator = experienceList.entrySet().iterator();
         Entry entry;

@@ -113,7 +113,7 @@ public class RegistryHelper {
 	@SideOnly(Side.CLIENT)
 	public static void registerItemModel(Item item, int meta) {
 		if (item != null) {
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MainModReference.MODID + ":" + item.getUnlocalizedName().substring(5)));
+			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		} else ModLogger.logErrorMessage("Trying to register Item model error item is null.");
 	}
 	

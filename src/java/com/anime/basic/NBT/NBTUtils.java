@@ -48,23 +48,24 @@ public class NBTUtils {
 	 * @return The ItemStack[] that was read from the tag.
 	 */
 	public static ItemStack[] readItemStacksFromNBT(NBTTagCompound tag, int size, String identifier) {
-		if (size <= 0 && tag != null && identifier != null && !identifier.isEmpty()) {
-		NBTTagList mainItems = tag.getTagList(identifier, 10);
-        ItemStack[] stacks = new ItemStack[size];
+		if (size > 0 && tag != null && identifier != null && !identifier.isEmpty()) {
+			ModLogger.logDebugMessage("WTF");
+			NBTTagList mainItems = tag.getTagList(identifier, 10);
+			ItemStack[] stacks = new ItemStack[size];
+			
+			for (int i = 0; i < mainItems.tagCount(); ++i) {
+				NBTTagCompound nbttagcompound1 = mainItems.getCompoundTagAt(i);
+				byte b0 = nbttagcompound1.getByte("Slot");
 
-        for (int i = 0; i < mainItems.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound1 = mainItems.getCompoundTagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
-
-            if (b0 >= 0 && b0 < size) {
-                stacks[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-            }
-        }
-        return stacks;
-        } else {
-        	ModLogger.logWarningMessage("Couldn't read ItemStack from NBT this could be an error please report to the Mod Author." + (tag !=null) + " " + size + identifier + ".");
-        }
-        return null;
+				if (b0 >= 0 && b0 < size) {
+					stacks[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+				}
+			}
+			return stacks;
+		} else {
+			ModLogger.logWarningMessage("Couldn't read ItemStack from NBT this could be an error please report to the Mod Author. " + (tag !=null) + " " + size + " " + (size <= 0) +  " " + identifier + " " + (!identifier.isEmpty()) + ".");
+		}
+		return new ItemStack[size];
 	}
 	
 }

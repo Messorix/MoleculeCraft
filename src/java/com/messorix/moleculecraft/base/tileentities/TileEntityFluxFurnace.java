@@ -81,12 +81,12 @@ public class TileEntityFluxFurnace extends ModTileEntity
 			input_slots = 2;
 			output_slots = 1;
 			
-			super.total_slots = fuel_slots + input_slots + output_slots;
-			super.first_input_slot = first_fuel_slot + input_slots;
-			super.first_output_slot = first_input_slot + output_slots;
-			super.itemStacks = new ItemStack[total_slots];
-			super.burnTimeInitial = new int[fuel_slots];
-			super.burnTimeRemaining = new int[fuel_slots];
+			total_slots = fuel_slots + input_slots + output_slots;
+			first_input_slot = first_fuel_slot + input_slots;
+			first_output_slot = first_input_slot + output_slots;
+			itemStacks = new ItemStack[total_slots];
+			burnTimeInitial = new int[fuel_slots];
+			burnTimeRemaining = new int[fuel_slots];
 			
 			setupDone = true;
 			System.out.println("Setup done");

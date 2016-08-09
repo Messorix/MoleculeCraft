@@ -10,15 +10,15 @@ public class MainModReference {
 	/**
 	 * Mod Identiifier String
 	 */
-	public static final String MODID = "testmod";
+	public static final String MODID = "moleculecraft";
 	/**
 	 * Mod In Game Name
 	 */
-	public static final String NAME = "Test Mod";
+	public static final String NAME = "MoleculeCraft";
 	/**
 	 * Version of the Mod
 	 **/
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "0.0.1";
 	/**
 	 * What versions of Minecraft this Mod will load on.
 	 */
@@ -32,11 +32,11 @@ public class MainModReference {
 	/**
 	 * Server Proxy Path.
 	 */
-	public static final String SERVER_PROXY_PATH = "com.anime.test.proxy.ServerProxy";
+	public static final String SERVER_PROXY_PATH = "com.messorix.moleculecraft.base.proxies.ServerProxy";
 	/**
 	 * Client Proxy Path
 	 */
-	public static final String CLIENT_PROXY_PATH = "com.anime.test.proxy.ClientProxy";
+	public static final String CLIENT_PROXY_PATH = "com.messorix.moleculecraft.base.proxies.ClientProxy";
 	
 	/**
 	 * A GuiHandler instance, register to handle GUIs.
