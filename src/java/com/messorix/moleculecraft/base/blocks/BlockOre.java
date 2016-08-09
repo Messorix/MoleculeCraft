@@ -12,7 +12,7 @@ import java.util.Map;
 public abstract class BlockOre extends Block
 {
 	public static String NAME;
-	public Map<ModAtom, Integer> MOLECULE = Maps.newHashMap();
+	public Map<ModAtom, Integer> MOLECULE = Maps.newLinkedHashMap();
 	
     public BlockOre(String unlocalizedName, String registryName, Material material) 
     {

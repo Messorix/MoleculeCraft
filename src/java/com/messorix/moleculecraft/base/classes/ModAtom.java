@@ -102,4 +102,10 @@ public class ModAtom {
 	public float getBoilingPoint() {
 		return BOILINGPOINT;
 	}
+
+
+	public ModAtom setSymbol(String string) {
+		SYMBOL = string;
+		return this;
+	}
 }

@@ -16,6 +16,9 @@ public class ModAtoms {
 	private static List<ModAtom> listOfAtoms = new ArrayList<ModAtom>();
 
 	public ModAtoms() {
+		listOfAtoms.add(new ModAtom().setSymbol("("));
+		listOfAtoms.add(new ModAtom().setSymbol(")"));
+		
 		try {
 
 			InputStream jsonInput = ModAtoms.class.getClassLoader()
