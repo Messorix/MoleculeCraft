@@ -16,7 +16,7 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent e) 
     {
-    	MoleculecraftBase.blocks.setItemModels();
+    	MoleculecraftBase.blocks.setBlockModels();
     	MoleculecraftBase.items.setItemModels();
     }
 

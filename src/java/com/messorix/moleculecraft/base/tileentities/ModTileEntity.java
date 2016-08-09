@@ -145,7 +145,7 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 			//System.out.println("Input slot = " + inputSlot);
 			
 			if (itemStacks[inputSlot] != null) {
-				result = this.getProcessingResultForItem(recipes, itemStacks[inputSlot]);
+				result = ModTileEntity.getProcessingResultForItem(recipes, itemStacks[inputSlot]);
 
 				if (result != null) {
 					for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {

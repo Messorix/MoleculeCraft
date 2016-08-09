@@ -10,8 +10,6 @@ import com.messorix.moleculecraft.base.blocks.BlockMachine;
 import com.messorix.moleculecraft.base.blocks.BlockOre;
 import com.messorix.moleculecraft.base.blocks.ModBlock;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -42,19 +40,15 @@ public class ModBlocks
 		modblocklist.add(FLUXFURNACE);
     }
     
-    public void setItemModels()
+    public void setBlockModels()
     {
-    	RenderItem renderitem = Minecraft.getMinecraft().getRenderItem();
-    	
     	for (ModBlock block:modblocklist)
     	{
-    		renderitem.getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5)));
     		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5)));
     	}
 
     	for (BlockOre block:oreblocklist)
     	{
-    		renderitem.getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5)));
     		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5)));
     	}
     }

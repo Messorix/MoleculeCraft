@@ -1,6 +1,7 @@
 package com.messorix.moleculecraft.base.containers;
 
 import com.messorix.moleculecraft.base.crafting.FluxGrinderRecipes;
+import com.messorix.moleculecraft.base.tileentities.ModTileEntity;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +42,7 @@ public class ContainerFluxGrinder extends ModContainer
 		
 		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
 		{
-			if (this.tileEntityFluxGrinder.getProcessingResultForItem(FluxGrinderRecipes.instance(), sourceStack) != null)
+			if (ModTileEntity.getProcessingResultForItem(FluxGrinderRecipes.instance(), sourceStack) != null)
 			{
 				System.out.println(first_input_index + ", " + input_slots + ", " + (first_input_index + input_slots));
 				
@@ -50,7 +51,7 @@ public class ContainerFluxGrinder extends ModContainer
 					return null;
 				}
 			}
-			else if (this.tileEntityFluxGrinder.getItemBurnTime(sourceStack) > 0)
+			else if (ModTileEntity.getItemBurnTime(sourceStack) > 0)
 			{
 				if (!mergeItemStack(sourceStack, first_fuel_index, first_fuel_index + fuel_slots, false))
 				{
@@ -58,7 +59,7 @@ public class ContainerFluxGrinder extends ModContainer
 				}
 			}
 		}
-		else if (sourceSlotIndex >= first_fuel_index && sourceSlotIndex < first_fuel_index + tileEntity.total_slots)
+		else if (sourceSlotIndex >= first_fuel_index && sourceSlotIndex < first_fuel_index + ModTileEntity.total_slots)
 		{
 			if (!mergeItemStack(sourceStack, first_vanilla_index, first_vanilla_index + vanilla_slots, false))
 			{

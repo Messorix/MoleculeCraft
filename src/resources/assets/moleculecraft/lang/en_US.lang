@@ -6,7 +6,7 @@ item.copper_ingot.name=Copper Ingot
 item.copper_dust.name=Copper Dust
 
 //Ores
-tile.copper_ore.name=Copper Ore
+tile.chalcocite_ore.name=Chalcocite Ore
 
 //Machines
 tile.flux_furnace.name=Flux Furnace

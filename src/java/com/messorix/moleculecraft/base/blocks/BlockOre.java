@@ -2,6 +2,7 @@ package com.messorix.moleculecraft.base.blocks;
 
 import com.google.common.collect.Maps;
 import com.messorix.moleculecraft.base.MoleculecraftBase;
+import com.messorix.moleculecraft.base.classes.ModAtom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,7 +12,7 @@ import java.util.Map;
 public abstract class BlockOre extends Block
 {
 	public static String NAME;
-	public static Map MOLECULE = Maps.newHashMap();
+	public Map<ModAtom, Integer> MOLECULE = Maps.newHashMap();
 	
     public BlockOre(String unlocalizedName, String registryName, Material material) 
     {

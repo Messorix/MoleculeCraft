@@ -1,12 +1,11 @@
 package com.messorix.moleculecraft.base.blocks;
 
 import com.messorix.moleculecraft.base.ModAtoms;
-import com.messorix.moleculecraft.base.classes.ModAtom;
 
 import net.minecraft.block.material.Material;
 
-public class BlockChalcociteOre extends BlockOre {
-	@SuppressWarnings("unchecked")
+public class BlockChalcociteOre extends BlockOre 
+{
 	public BlockChalcociteOre() 
 	{
 		super("chalcocite_ore", "chalcocite_ore", Material.ROCK);

@@ -1,10 +1,6 @@
 package com.messorix.moleculecraft.base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
-import com.messorix.moleculecraft.base.items.ModItem;
 import com.messorix.moleculecraft.base.proxies.CommonProxy;
 
 import net.minecraftforge.fml.common.Mod;

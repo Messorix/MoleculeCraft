@@ -9,8 +9,8 @@ import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 
 public class ModRecipes {
-    private final Map processingList = Maps.newHashMap();
-    private final Map experienceList = Maps.newHashMap();
+    private final Map<ItemStack, ItemStack> processingList = Maps.newHashMap();
+    private final Map<ItemStack, Float> experienceList = Maps.newHashMap();
     
     private static final ModRecipes processingBase = new ModRecipes();
     /** The list of grinding results. */
@@ -31,8 +31,8 @@ public class ModRecipes {
      */
     public ItemStack getProcessingResult(ItemStack parItemStack)
     {
-        Iterator iterator = processingList.entrySet().iterator();
-        Entry entry;
+        Iterator<?> iterator = processingList.entrySet().iterator();
+        Entry<?, ?> entry;
 
         do
         {
@@ -41,7 +41,7 @@ public class ModRecipes {
                 return null;
             }
 
-            entry = (Entry)iterator.next();
+            entry = (Entry<?, ?>)iterator.next();
         }
         while (!areItemStacksEqual(parItemStack, (ItemStack)entry.getKey()));
 
@@ -57,15 +57,15 @@ public class ModRecipes {
               .getMetadata());
     }
 
-    public Map getProcessingList()
+    public Map<ItemStack, ItemStack> getProcessingList()
     {
         return processingList;
     }
 
     public float getProcessingExperience(ItemStack parItemStack)
     {
-        Iterator iterator = experienceList.entrySet().iterator();
-        Entry entry;
+        Iterator<?> iterator = experienceList.entrySet().iterator();
+        Entry<?, ?> entry;
 
         do
         {
@@ -74,7 +74,7 @@ public class ModRecipes {
                 return 0.0F;
             }
 
-            entry = (Entry)iterator.next();
+            entry = (Entry<?, ?>)iterator.next();
         }
         while (!areItemStacksEqual(parItemStack, 
               (ItemStack)entry.getKey()));

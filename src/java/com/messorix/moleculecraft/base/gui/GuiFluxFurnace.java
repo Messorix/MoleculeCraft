@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.messorix.moleculecraft.base.Reference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxFurnace;
+import com.messorix.moleculecraft.base.tileentities.ModTileEntity;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
 
 import net.minecraft.client.Minecraft;
@@ -65,7 +66,7 @@ public class GuiFluxFurnace  extends GuiContainer
     			(int)(processProgress * process_bar_width), 
     			 process_bar_height);
     	
-    	for ( int i = 0; i < entity.fuel_slots; i++)
+    	for ( int i = 0; i < ModTileEntity.fuel_slots; i++)
     	{
     		double burnRemaining = entity.fractionOfFuelRemaining(i);
     		int yOffset = (int)((1.0 - burnRemaining) * flame_height);
@@ -100,7 +101,7 @@ public class GuiFluxFurnace  extends GuiContainer
     		text.add(processPercentage + "%");
     	}
     	
-    	for(int i = 0; i < entity.fuel_slots; i++)
+    	for(int i = 0; i < ModTileEntity.fuel_slots; i++)
     	{
         	if (isInRect(guiLeft + flame_xpos + flame_x_spacing * i, guiTop + flame_ypos, flame_width, flame_height, mouseX, mouseY))
         	{
