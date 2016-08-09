@@ -3,6 +3,7 @@ package com.messorix.moleculecraft.base;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.messorix.moleculecraft.base.classes.ModAtom;
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
 import com.messorix.moleculecraft.base.proxies.CommonProxy;
 
@@ -32,7 +33,7 @@ public class MoleculecraftBase
     public static ModGuiHandlers guis = new ModGuiHandlers();
     public static MoleculeCraftTab moleculeCraftTab = new MoleculeCraftTab();
     
-    public static Map<Block, Integer> molecules = Maps.newHashMap();
+    public static Map<Block, Map<ModAtom, Integer>> molecules = Maps.newHashMap();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {

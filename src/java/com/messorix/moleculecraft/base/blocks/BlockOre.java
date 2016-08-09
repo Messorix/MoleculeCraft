@@ -22,7 +22,7 @@ public abstract class BlockOre extends Block
         this.setUnlocalizedName(unlocalizedName);
         this.setCreativeTab(MoleculecraftBase.moleculeCraftTab);
         
-		setHardness(3F);
+        setHardness(3F);
 		setResistance(5F);
 	}
 }
