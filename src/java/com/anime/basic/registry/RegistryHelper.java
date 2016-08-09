@@ -179,6 +179,5 @@ public class RegistryHelper {
 	 */
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerPacket(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
 		MainModReference.WRAPPER.registerMessage(messageHandler, requestMessageType, ++NETWORK_DISCRIMINATOR, side);
-	}
-	
+	}	
 }

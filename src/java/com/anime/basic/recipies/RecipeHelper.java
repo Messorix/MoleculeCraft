@@ -155,6 +155,5 @@ public class RecipeHelper {
 					Leash.remove();
 			}
 		}
-	}
-	
+	}	
 }

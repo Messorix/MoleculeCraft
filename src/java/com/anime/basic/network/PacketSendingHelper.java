@@ -55,5 +55,4 @@ public class PacketSendingHelper {
 	public static void sendToServer(IMessage message) {
 		MainModReference.WRAPPER.sendToServer(message);
 	}
-	
 }

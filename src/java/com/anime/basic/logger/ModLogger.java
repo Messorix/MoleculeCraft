@@ -53,5 +53,4 @@ public class ModLogger {
 	public static void logFatalMessage(String fatal) {
 		instance.log(Level.FATAL, fatal);
 	}
-	
 }
