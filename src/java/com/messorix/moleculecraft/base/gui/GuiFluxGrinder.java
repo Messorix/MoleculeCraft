@@ -1,10 +1,10 @@
 package com.messorix.moleculecraft.base.gui;
 
 import java.awt.Color;
+import com.anime.basic.MainModReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.messorix.moleculecraft.base.Reference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxGrinder;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFluxGrinder  extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/flux_grinder_gui.png");
+    private static final ResourceLocation texture = new ResourceLocation(MainModReference.MODID + ":textures/gui/flux_grinder_gui.png");
     private final TileEntityFluxGrinder entity;
 
     public GuiFluxGrinder(InventoryPlayer player, TileEntityFluxGrinder entity)
@@ -65,7 +65,7 @@ public class GuiFluxGrinder  extends GuiContainer
     			(int)(processProgress * process_bar_width), 
     			 process_bar_height);
     	
-    	for ( int i = 0; i < entity.fuel_slots; i++)
+    	for ( int i = 0; i < TileEntityFluxGrinder.fuel_slots; i++)
     	{
     		double burnRemaining = entity.fractionOfFuelRemaining(i);
     		int yOffset = (int)((1.0 - burnRemaining) * flame_height);
@@ -100,7 +100,7 @@ public class GuiFluxGrinder  extends GuiContainer
     		text.add(processPercentage + "%");
     	}
     	
-    	for(int i = 0; i < entity.fuel_slots; i++)
+    	for(int i = 0; i < TileEntityFluxGrinder.fuel_slots; i++)
     	{
         	if (isInRect(guiLeft + flame_xpos + flame_x_spacing * i, guiTop + flame_ypos, flame_width, flame_height, mouseX, mouseY))
         	{

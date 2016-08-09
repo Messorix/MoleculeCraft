@@ -40,14 +40,14 @@ public class ContainerFluxFurnace extends ModContainer
 		
 		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
 		{
-			if (this.tileEntityFluxFurnace.getProcessingResultForItem(sourceStack) != null)
+			if (TileEntityFluxFurnace.getProcessingResultForItem(sourceStack) != null)
 			{
 				if (!mergeItemStack(sourceStack, first_input_index, first_input_index + input_slots, false))
 				{
 					return null;
 				}
 			}
-			else if (this.tileEntityFluxFurnace.getItemBurnTime(sourceStack) > 0)
+			else if (TileEntityFluxFurnace.getItemBurnTime(sourceStack) > 0)
 			{
 				if (!mergeItemStack(sourceStack, first_fuel_index, first_fuel_index + fuel_slots, true))
 				{

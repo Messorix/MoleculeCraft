@@ -4,6 +4,7 @@ import com.messorix.moleculecraft.base.tileentities.ModTileEntity;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -31,15 +32,15 @@ public abstract class ModContainer extends Container {
 	protected final int first_fuel_slot = 0;
 	protected final int first_input_slot;
 	protected final int first_output_slot;
-
+	
 	public ModContainer(InventoryPlayer player, ModTileEntity tileentity)
 	{
 		this.tileEntity = tileentity;
 
-		first_input_index = first_fuel_index + tileEntity.fuel_slots;
-		first_output_index = first_input_index + tileEntity.input_slots;
-		first_input_slot = first_fuel_slot + tileEntity.fuel_slots;
-		first_output_slot = first_input_slot + tileEntity.input_slots;
+		first_input_index = first_fuel_index + ModTileEntity.fuel_slots;
+		first_output_index = first_input_index + ModTileEntity.input_slots;
+		first_input_slot = first_fuel_slot + ModTileEntity.fuel_slots;
+		first_output_slot = first_input_slot + ModTileEntity.input_slots;
 
 		//Hotbar
 		final int slot_x_spacing = 18;
@@ -74,7 +75,7 @@ public abstract class ModContainer extends Container {
 		final int fuel_slots_xpos = 56;
 		final int fuel_slots_ypos = 53;
 		
-		for (int x = 0; x < tileEntity.fuel_slots; x++)
+		for (int x = 0; x < ModTileEntity.fuel_slots; x++)
 		{
 			int slotNumber = x + first_fuel_slot;
 			addSlotToContainer(new SlotFuel(tileEntity, slotNumber, fuel_slots_xpos + ((slot_x_spacing + 4) * x), fuel_slots_ypos));
@@ -84,7 +85,7 @@ public abstract class ModContainer extends Container {
 		final int input_slots_xpos = 56;
 		final int input_slots_ypos = 17;
 		
-		for (int x = 0; x < tileEntity.input_slots; x++)
+		for (int x = 0; x < ModTileEntity.input_slots; x++)
 		{
 			int SlotNumber = x + first_input_slot;
 			addSlotToContainer(new SlotProcessableInput(tileEntity, SlotNumber, input_slots_xpos + ((slot_x_spacing + 4) * x), input_slots_ypos));
@@ -94,13 +95,14 @@ public abstract class ModContainer extends Container {
 		final int output_slots_xpos = 112;
 		final int output_slots_ypos = 35;
 		
-		for (int x = 0; x < tileEntity.output_slots; x++)
+		for (int x = 0; x < ModTileEntity.output_slots; x++)
 		{
 			int SlotNumber = x + first_output_slot;
 			addSlotToContainer(new SlotOutput(tileEntity, SlotNumber, output_slots_xpos + ((slot_x_spacing + 4) * x), output_slots_ypos));
 		}
+		
 	}
-
+	
 	public class SlotFuel extends Slot
 	{
 		public SlotFuel(IInventory inventory, int index, int xpos, int ypos)

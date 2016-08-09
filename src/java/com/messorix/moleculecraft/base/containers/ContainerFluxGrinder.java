@@ -1,5 +1,6 @@
 package com.messorix.moleculecraft.base.containers;
 
+import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.crafting.FluxGrinderRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
@@ -41,7 +42,7 @@ public class ContainerFluxGrinder extends ModContainer
 		
 		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
 		{
-			if (this.tileEntityFluxGrinder.getProcessingResultForItem(FluxGrinderRecipes.instance(), sourceStack) != null)
+			if (TileEntityFluxGrinder.getProcessingResultForItem(FluxGrinderRecipes.instance(), sourceStack) != null)
 			{
 				System.out.println(first_input_index + ", " + input_slots + ", " + (first_input_index + input_slots));
 				
@@ -50,7 +51,7 @@ public class ContainerFluxGrinder extends ModContainer
 					return null;
 				}
 			}
-			else if (this.tileEntityFluxGrinder.getItemBurnTime(sourceStack) > 0)
+			else if (TileEntityFluxGrinder.getItemBurnTime(sourceStack) > 0)
 			{
 				if (!mergeItemStack(sourceStack, first_fuel_index, first_fuel_index + fuel_slots, false))
 				{
@@ -58,7 +59,7 @@ public class ContainerFluxGrinder extends ModContainer
 				}
 			}
 		}
-		else if (sourceSlotIndex >= first_fuel_index && sourceSlotIndex < first_fuel_index + tileEntity.total_slots)
+		else if (sourceSlotIndex >= first_fuel_index && sourceSlotIndex < first_fuel_index + TileEntityFluxGrinder.total_slots)
 		{
 			if (!mergeItemStack(sourceStack, first_vanilla_index, first_vanilla_index + vanilla_slots, false))
 			{
@@ -85,12 +86,17 @@ public class ContainerFluxGrinder extends ModContainer
 	}
 	
 	@Override
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
+		listener.sendAllWindowProperties(this, tileEntity);
+	}
+	
+	@Override
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		
 		boolean allFieldsHaveChanged = false;
-		boolean fieldHasChanged [] = new boolean[this.tileEntityFluxGrinder.getFieldCount()];
+		boolean[] fieldHasChanged = new boolean[this.tileEntityFluxGrinder.getFieldCount()];
 		
 		if (cachedFields == null)
 		{
