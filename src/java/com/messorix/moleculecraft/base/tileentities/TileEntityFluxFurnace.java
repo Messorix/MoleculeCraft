@@ -89,7 +89,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 			super.burnTimeRemaining = new int[fuel_slots];
 			
 			setupDone = true;
-			System.out.println("Setup done");
 		}
 	}
 }

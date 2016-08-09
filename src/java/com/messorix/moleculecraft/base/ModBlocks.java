@@ -10,7 +10,9 @@ import com.messorix.moleculecraft.base.blocks.BlockMachine;
 import com.messorix.moleculecraft.base.blocks.BlockOre;
 import com.messorix.moleculecraft.base.blocks.ModBlock;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -39,8 +41,8 @@ public class ModBlocks
 		GameRegistry.registerBlock(FLUXFURNACE = new BlockFluxFurnace(), BlockFluxFurnace.NAME);
 		modblocklist.add(FLUXFURNACE);
     }
-    
-    public void setBlockModels()
+
+	public void setBlockModels()
     {
     	for (ModBlock block:modblocklist)
     	{

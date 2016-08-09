@@ -1,8 +1,12 @@
 package com.messorix.moleculecraft.base;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
 import com.messorix.moleculecraft.base.proxies.CommonProxy;
 
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -28,6 +32,7 @@ public class MoleculecraftBase
     public static ModGuiHandlers guis = new ModGuiHandlers();
     public static MoleculeCraftTab moleculeCraftTab = new MoleculeCraftTab();
     
+    public static Map<Block, Integer> molecules = Maps.newHashMap();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
