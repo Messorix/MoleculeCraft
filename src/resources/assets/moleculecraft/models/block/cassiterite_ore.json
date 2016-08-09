@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
     "textures": {
-        "all": "moleculecraft:blocks/chalcocite_ore"
+        "all": "moleculecraft:blocks/cassiterite_ore"
     }
 }

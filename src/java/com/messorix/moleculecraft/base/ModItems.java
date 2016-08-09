@@ -3,12 +3,11 @@ package com.messorix.moleculecraft.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anime.basic.registry.RegistryHelper;
 import com.messorix.moleculecraft.base.items.ItemCopperDust;
 import com.messorix.moleculecraft.base.items.ItemCopperIngot;
 import com.messorix.moleculecraft.base.items.ModItem;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems 
@@ -30,7 +29,7 @@ public class ModItems
     {
     	for (ModItem item:itemlist)
     	{
-    		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5)));
+    		RegistryHelper.registerItemModel(item, 0);
     	}
     }
 }

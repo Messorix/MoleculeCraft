@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 public abstract class BlockMachine extends ModBlock implements ITileEntityProvider
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    private final boolean isWorking;
+//    private final boolean isWorking;
     protected static boolean keepInventory;
     /*protected static PropertyInteger burning_sides;
     protected static int one_side_light_value;
@@ -38,7 +38,7 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
 	public BlockMachine(String unlocalizedName, String registryName, Material material, boolean isWorking) {
 		super(unlocalizedName, registryName, material);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        this.isWorking = isWorking;
+//        this.isWorking = isWorking;
 	}
 
     @Nullable

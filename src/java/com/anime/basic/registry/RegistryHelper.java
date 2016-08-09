@@ -113,7 +113,7 @@ public class RegistryHelper {
 	@SideOnly(Side.CLIENT)
 	public static void registerItemModel(Item item, int meta) {
 		if (item != null) {
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MainModReference.MODID + ":" + item.getUnlocalizedName().substring(5)));
+			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		} else ModLogger.logErrorMessage("Trying to register Item model error item is null.");
 	}
 	
@@ -179,5 +179,6 @@ public class RegistryHelper {
 	 */
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerPacket(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
 		MainModReference.WRAPPER.registerMessage(messageHandler, requestMessageType, ++NETWORK_DISCRIMINATOR, side);
-	}	
+	}
+	
 }

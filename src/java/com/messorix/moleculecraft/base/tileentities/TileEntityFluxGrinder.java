@@ -28,55 +28,57 @@ public class TileEntityFluxGrinder extends ModTileEntity
 	
 	@Override
 	public void update() {
-		if (canProcess(FluxGrinderRecipes.instance())) {
-			int numberOfFuelBurning = burnFuel();
+		if (!worldObj.isRemote) {
+			if (canProcess(FluxGrinderRecipes.instance())) {
+				int numberOfFuelBurning = burnFuel();
 
-			if (numberOfFuelBurning > 0) {
-				processTime += numberOfFuelBurning;
+				if (numberOfFuelBurning > 0) {
+					processTime += numberOfFuelBurning;
+				} else {
+					processTime -= 2;
+				}
+
+				if (processTime < 0) {
+					processTime = 0;
+				}
+
+				if (processTime >= processing_time_for_completion) {
+					processItem(FluxGrinderRecipes.instance());
+					processTime = 0;
+				}
 			} else {
-				processTime -= 2;
-			}
-
-			if (processTime < 0) {
 				processTime = 0;
 			}
 
-			if (processTime >= processing_time_for_completion) {
-				processItem(FluxGrinderRecipes.instance());
-				processTime = 0;
-			}
-		} else {
-			processTime = 0;
-		}
+			int numberBurning = 0;
 
-		int numberBurning = 0;
-		
-		if (setupDone) { 			
-			if (super.burnTimeRemaining != null)
-			{
-				numberBurning = super.numberOfBurningFuelSlots();
-			}
-		}
-
-		if (cachedNumberOfBurningSlots != numberBurning) {
-			cachedNumberOfBurningSlots = numberBurning;
-
-			if (worldObj.isRemote) {
-				worldObj.markBlockRangeForRenderUpdate(pos, pos);
+			if (setupDone) { 			
+				if (super.burnTimeRemaining != null)
+				{
+					numberBurning = super.numberOfBurningFuelSlots();
+				}
 			}
 
-			worldObj.checkLightFor(EnumSkyBlock.BLOCK, pos);
+			if (cachedNumberOfBurningSlots != numberBurning) {
+				cachedNumberOfBurningSlots = numberBurning;
+
+				if (worldObj.isRemote) {
+					worldObj.markBlockRangeForRenderUpdate(pos, pos);
+				}
+
+				worldObj.checkLightFor(EnumSkyBlock.BLOCK, pos);
+			}
 		}
 	}
 
 	@Override
 	public boolean isItemValidForFuelSlot(ItemStack stack) {
-		return (this.getItemBurnTime(stack) > 0) ? true : false;
+		return (getItemBurnTime(stack) > 0) ? true : false;
 	}
 
 	@Override
 	public boolean isItemValidForInputSlot(ItemStack stack) {
-		return (this.getProcessingResultForItem(FluxGrinderRecipes.instance(), stack) != null) ? true : false;
+		return (getProcessingResultForItem(FluxGrinderRecipes.instance(), stack) != null) ? true : false;
 	}
 
 	@Override
@@ -92,12 +94,15 @@ public class TileEntityFluxGrinder extends ModTileEntity
 			input_slots = 1;
 			output_slots = 2;
 			
-			super.total_slots = fuel_slots + input_slots + output_slots;
-			super.first_input_slot = first_fuel_slot + fuel_slots;
-			super.first_output_slot = first_input_slot + input_slots;
-			super.itemStacks = new ItemStack[total_slots];
-			super.burnTimeInitial = new int[fuel_slots];
-			super.burnTimeRemaining = new int[fuel_slots];
+			total_slots = fuel_slots + input_slots + output_slots;
+			first_input_slot = first_fuel_slot + fuel_slots;
+			first_output_slot = first_input_slot + input_slots;
+			itemStacks = new ItemStack[total_slots];
+			burnTimeInitial = new int[fuel_slots];
+			burnTimeRemaining = new int[fuel_slots];
+			
+			first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + fuel_slots);
+			number_of_fields = (byte) (first_burn_time_initial_field_id + fuel_slots);
 			
 			setupDone = true;
 		}

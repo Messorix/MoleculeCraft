@@ -1,14 +1,14 @@
 package com.messorix.moleculecraft.base;
 
-import com.messorix.moleculecraft.base.tileentities.*;
-
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import com.anime.basic.registry.RegistryHelper;
+import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
+import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 public class ModTileEntities 
 {
-	public void registerTileEntities()
+	public static void registerTileEntities()
     {
-		GameRegistry.registerTileEntity(TileEntityFluxGrinder.class, "tileEntityFluxGrinder");
-		GameRegistry.registerTileEntity(TileEntityFluxFurnace.class, "tileEntityFluxFurnace");
+		RegistryHelper.registerTileEntity(TileEntityFluxGrinder.class);
+		RegistryHelper.registerTileEntity(TileEntityFluxFurnace.class);
     }
 }

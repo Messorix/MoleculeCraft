@@ -20,7 +20,7 @@ public class ModRecipes {
         return processingBase;
     }
     
-    public void addProcessingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
+	public void addProcessingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
     {
         processingList.put(parItemStackIn, parItemStackOut);
         experienceList.put(parItemStackOut, Float.valueOf(parExperience));
@@ -29,7 +29,7 @@ public class ModRecipes {
     /**
      * Returns the Processing result of an item.
      */
-    public ItemStack getProcessingResult(ItemStack parItemStack)
+	public ItemStack getProcessingResult(ItemStack parItemStack)
     {
         Iterator<?> iterator = processingList.entrySet().iterator();
         Entry<?, ?> entry;

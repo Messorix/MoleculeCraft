@@ -1,12 +1,10 @@
 package com.messorix.moleculecraft.base;
-import com.messorix.moleculecraft.base.crafting.ModRecipeRegister;
-
-import net.minecraft.item.ItemStack;
+import com.anime.basic.recipies.RecipeHelper;
 
 public class ModRecipes 
 {
 	public void registerRecipes()
     {
-		ModRecipeRegister.registerProcessingRecipe(ModItems.COPPERDUST, new ItemStack(ModItems.COPPERINGOT), 0.7F);
+		RecipeHelper.addSmeltingRecipe(ModItems.COPPERDUST, 0, ModItems.COPPERINGOT, 1, 0, 0.7F);
     }
 }

@@ -1,10 +1,10 @@
 package com.messorix.moleculecraft.base.gui;
 
 import java.awt.Color;
+import com.anime.basic.MainModReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.messorix.moleculecraft.base.Reference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxGrinder;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFluxGrinder  extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/flux_grinder_gui.png");
+    private static final ResourceLocation texture = new ResourceLocation(MainModReference.MODID + ":textures/gui/flux_grinder_gui.png");
     private final TileEntityFluxGrinder entity;
 
     public GuiFluxGrinder(InventoryPlayer player, TileEntityFluxGrinder entity)

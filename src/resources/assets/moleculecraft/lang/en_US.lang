@@ -8,6 +8,7 @@ item.copper_dust.name=Copper Dust
 //Ores
 tile.chalcocite_ore.name=Chalcocite Ore
 tile.acanthite_ore.name=Acanthite Ore
+tile.cassiterite_ore.name=Cassiterite Ore
 
 //Machines
 tile.flux_furnace.name=Flux Furnace

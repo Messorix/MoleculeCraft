@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"normal": [{"model": "moleculecraft:cassiterite_ore"}],
+		"inventory": [{"model": "moleculecraft:cassiterite_ore"}]
+	}
+}

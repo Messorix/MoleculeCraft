@@ -31,7 +31,7 @@ public abstract class ModContainer extends Container {
 	protected final int first_fuel_slot = 0;
 	protected final int first_input_slot;
 	protected final int first_output_slot;
-
+	
 	public ModContainer(InventoryPlayer player, ModTileEntity tileentity)
 	{
 		this.tileEntity = tileentity;
@@ -99,8 +99,9 @@ public abstract class ModContainer extends Container {
 			int SlotNumber = x + first_output_slot;
 			addSlotToContainer(new SlotOutput(tileEntity, SlotNumber, output_slots_xpos + ((slot_x_spacing + 4) * x), output_slots_ypos));
 		}
+		
 	}
-
+	
 	public class SlotFuel extends Slot
 	{
 		public SlotFuel(IInventory inventory, int index, int xpos, int ypos)

@@ -13,12 +13,10 @@ import com.messorix.moleculecraft.base.classes.ModAtom;
 public class ModAtoms {
 
 	private ObjectMapper mapper = new ObjectMapper();
-	private static List<ModAtom> listOfAtoms = new ArrayList<ModAtom>();
+	private List<ModAtom> listOfAtoms = new ArrayList<ModAtom>();
 
 	public ModAtoms() {
-		listOfAtoms.add(new ModAtom().setSymbol("("));
-		listOfAtoms.add(new ModAtom().setSymbol(")"));
-		
+
 		try {
 
 			InputStream jsonInput = ModAtoms.class.getClassLoader()
@@ -39,7 +37,7 @@ public class ModAtoms {
 	 *            the atom name to search for
 	 * @return ModAtom
 	 */
-	public static ModAtom getModAtomByName(String name) {
+	public ModAtom getModAtomByName(String name) {
 
 		for (ModAtom atom : listOfAtoms) {
 			if (atom.getName().toLowerCase().equals(name.toLowerCase())) {
@@ -56,7 +54,7 @@ public class ModAtoms {
 	 *            the atom symbol to search for
 	 * @return ModAtom
 	 */
-	public static ModAtom getModAtomBySymbol(String symbol) {
+	public ModAtom getModAtomBySymbol(String symbol) {
 
 		for (ModAtom atom : listOfAtoms) {
 			if (atom.getSymbol().toLowerCase().equals(symbol.toLowerCase())) {

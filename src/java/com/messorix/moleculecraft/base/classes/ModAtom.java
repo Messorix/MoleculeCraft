@@ -7,14 +7,14 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @Generated("org.jsonschema2pojo")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ModAtom {
+public class ModAtom extends ModMoleculeBase {
 
 	@JsonProperty("atomicNumber")
 	private int ATOMNUMBER;
 
 	@JsonProperty("symbol")
 	private String SYMBOL;
-	
+
 	@JsonProperty("name")
 	private String NAME;
 
@@ -30,11 +30,11 @@ public class ModAtom {
 	@JsonProperty("radioActive")
 	public boolean RADIOACTIVE;
 
-	public ModAtom()
-	{
-		
+	
+	public ModAtom() {
+		super();
 	}
-		
+
 	
 	/**
 	 * 
@@ -44,8 +44,7 @@ public class ModAtom {
 		this.RADIOACTIVE = radioActive;
 		return this;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return The atomicNumber
@@ -54,7 +53,6 @@ public class ModAtom {
 		return RADIOACTIVE;
 	}
 
-	
 	/**
 	 * 
 	 * @return The atomicNumber
@@ -103,9 +101,10 @@ public class ModAtom {
 		return BOILINGPOINT;
 	}
 
-
 	public ModAtom setSymbol(String string) {
 		SYMBOL = string;
 		return this;
 	}
+
+
 }

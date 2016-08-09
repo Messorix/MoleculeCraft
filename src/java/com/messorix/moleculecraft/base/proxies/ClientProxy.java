@@ -13,7 +13,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
-    	MoleculecraftBase.guis.registerGuis();
+    	MoleculecraftBase.blocks.setBlockModels();
+    	MoleculecraftBase.items.setItemModels();
     }
 
     @Override

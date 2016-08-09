@@ -1,6 +1,6 @@
 {
     "variants": {
-    	"normal": { "model": "moleculecraft:acanthite_ore" }
-        "inventory": { "model": "moleculecraft:acanthite_ore" }
+    	"normal": [{"model": "moleculecraft:acanthite_ore"}],
+        "inventory": [{"model": "moleculecraft:acanthite_ore"}]
     }
 }

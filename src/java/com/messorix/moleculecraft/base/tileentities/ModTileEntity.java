@@ -2,6 +2,8 @@ package com.messorix.moleculecraft.base.tileentities;
 
 import java.util.Arrays;
 
+import com.anime.basic.NBT.NBTUtils;
+import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.crafting.ModRecipes;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +11,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -142,14 +143,11 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 		ItemStack result = null;
 
 		for (int inputSlot = first_input_slot; inputSlot < first_input_slot + input_slots; inputSlot++) {
-			//System.out.println("Input slot = " + inputSlot);
-			
 			if (itemStacks[inputSlot] != null) {
-				result = ModTileEntity.getProcessingResultForItem(recipes, itemStacks[inputSlot]);
+				result = getProcessingResultForItem(recipes, itemStacks[inputSlot]);
 
 				if (result != null) {
 					for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-						System.out.println("outputslot: " + (first_output_slot + output_slots));
 						
 						ItemStack outputStack = itemStacks[outputSlot];
 
@@ -217,25 +215,27 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 
 	@Override
 	public void update() {
-		if (canProcess(ModRecipes.instance())) {
-			int numberOfFuelBurning = burnFuel();
+		if (!worldObj.isRemote) {
+			if (canProcess(ModRecipes.instance())) {
+				int numberOfFuelBurning = burnFuel();
 
-			if (numberOfFuelBurning > 0) {
-				processTime += numberOfFuelBurning;
+				if (numberOfFuelBurning > 0) {
+					processTime += numberOfFuelBurning;
+				} else {
+					processTime -= 2;
+				}
+
+				if (processTime < 0) {
+					processTime = 0;
+				}
+
+				if (processTime >= processing_time_for_completion) {
+					processItem(ModRecipes.instance());
+					processTime = 0;
+				}
 			} else {
-				processTime -= 2;
-			}
-
-			if (processTime < 0) {
 				processTime = 0;
 			}
-
-			if (processTime >= processing_time_for_completion) {
-				processItem(ModRecipes.instance());
-				processTime = 0;
-			}
-		} else {
-			processTime = 0;
 		}
 
 		/*int numberBurning = numberOfBurningFuelSlots();
@@ -339,20 +339,7 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	{
 		super.writeToNBT(parentNBTTagCompound);
 		
-		NBTTagList dataForAllSlots = new NBTTagList();
-		
-		for (int i = 0; i < this.itemStacks.length; i++)
-		{
-			if (this.itemStacks[i] != null)
-			{
-				NBTTagCompound dataForThisSlot = new NBTTagCompound();
-				dataForThisSlot.setByte("Slot", (byte)i);
-				this.itemStacks[i].writeToNBT(dataForThisSlot);
-				dataForAllSlots.appendTag(dataForThisSlot);
-			}
-		}
-		
-		parentNBTTagCompound.setTag("Items", dataForAllSlots);
+		parentNBTTagCompound = NBTUtils.writeItemStacksToNBT(parentNBTTagCompound, itemStacks, NBTUtils.MAIN_SLOTS_NAME);
 		parentNBTTagCompound.setShort("ProcessTime", processTime);
 		parentNBTTagCompound.setTag("BurnTimeRemaining", new NBTTagIntArray(burnTimeRemaining));
 		parentNBTTagCompound.setTag("BurnTimeInitial", new NBTTagIntArray(burnTimeInitial));
@@ -365,21 +352,7 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	{
 		super.readFromNBT(nbtTagCompound);
 		
-		final byte nbt_type_compound = 10;
-		NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items", nbt_type_compound);
-		Arrays.fill(itemStacks, null);
-		
-		for (int i = 0; i < dataForAllSlots.tagCount(); i++)
-		{
-			NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
-			byte slotNumber = dataForOneSlot.getByte("Slot");
-			
-			if (slotNumber >= 0 && slotNumber < this.itemStacks.length)
-			{
-				this.itemStacks[slotNumber] = ItemStack.loadItemStackFromNBT(dataForOneSlot);
-			}
-		}
-		
+		itemStacks = NBTUtils.readItemStacksFromNBT(nbtTagCompound, total_slots, NBTUtils.MAIN_SLOTS_NAME);
 		processTime = nbtTagCompound.getShort("ProcessTime");
 		burnTimeRemaining = Arrays.copyOf(nbtTagCompound.getIntArray("BurnTimeRemaining"), fuel_slots);
 		burnTimeInitial = Arrays.copyOf(nbtTagCompound.getIntArray("BurnTimeInitial"), fuel_slots);
@@ -420,25 +393,28 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 		return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
 	}
 
-	private static final byte process_field_id = 0;
-	private static final byte first_burn_time_remaining_field_id = 1;
-	private static final byte first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + (byte)fuel_slots);
-	private static final byte number_of_fields = (byte) (first_burn_time_initial_field_id + (byte)fuel_slots);
+	protected static byte process_field_id = 0;
+	protected static byte first_burn_time_remaining_field_id = 1;
+	protected static byte first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + fuel_slots);
+	protected static byte number_of_fields = (byte) (first_burn_time_initial_field_id + fuel_slots);
 
 	@Override
 	public int getField(int id) {
 		if (id == process_field_id)
-		{	
-			return 0;
+		{
+			ModLogger.logWarningMessage("Process time got");
+			return processTime;
 		}
 		
-		if (id >= first_burn_time_remaining_field_id && id < first_burn_time_remaining_field_id + (byte)fuel_slots)
+		if (id >= first_burn_time_remaining_field_id && id < first_burn_time_initial_field_id)
 		{
+			ModLogger.logWarningMessage("Burn time remaining got");
 			return burnTimeRemaining[id - first_burn_time_remaining_field_id];
 		}
 		
-		if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + (byte)fuel_slots)
+		if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
+			ModLogger.logWarningMessage("Burn time initial got");
 			return burnTimeInitial[id - first_burn_time_initial_field_id];
 		}
 		
@@ -450,14 +426,17 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	public void setField(int id, int value) {
 		if (id == process_field_id)
 		{
+			ModLogger.logWarningMessage("Process time change.");
 			processTime = (short)value;
 		}
 		else if (id >= first_burn_time_remaining_field_id && id < first_burn_time_remaining_field_id + fuel_slots)
 		{
+			ModLogger.logWarningMessage("Burn time remaining change");
 			burnTimeRemaining[id - first_burn_time_remaining_field_id] = value;
 		}
 		else if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
+			ModLogger.logWarningMessage("Burn Time inital change");
 			burnTimeInitial[id - first_burn_time_initial_field_id] = value;
 		}
 		else
@@ -473,7 +452,7 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return false;
+		return isItemValidForFuelSlot(stack) || isItemValidForInputSlot(stack) || isItemValidForOutputSlot(stack);
 	}
 
 	@Override
@@ -489,14 +468,8 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	}
 	
 	@Override
-	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-
-	}
+	public void openInventory(EntityPlayer player) {}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-
-	}
+	public void closeInventory(EntityPlayer player) {}
 }

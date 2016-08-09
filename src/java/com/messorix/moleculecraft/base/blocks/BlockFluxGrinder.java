@@ -1,10 +1,11 @@
 package com.messorix.moleculecraft.base.blocks;
 
+import com.anime.basic.MainModReference;
+import com.anime.basic.network.GuiHandler;
+
 import javax.annotation.Nullable;
 
 import com.messorix.moleculecraft.base.ModBlocks;
-import com.messorix.moleculecraft.base.Reference;
-import com.messorix.moleculecraft.base.gui.GuiHandlerFluxGrinder;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 import net.minecraft.block.material.Material;
@@ -82,7 +83,7 @@ public class BlockFluxGrinder extends BlockMachine
        		return true;
        	}
        	
-       	playerIn.openGui(Reference.MOD_ID, GuiHandlerFluxGrinder.getGUIID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+       	playerIn.openGui(MainModReference.MODID, GuiHandler.FLUX_GRINDER, worldIn, pos.getX(), pos.getY(), pos.getZ());
        	
        	return true;
     }

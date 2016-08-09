@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.messorix.moleculecraft.base.Reference;
+import com.anime.basic.MainModReference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxFurnace;
-import com.messorix.moleculecraft.base.tileentities.ModTileEntity;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
 
 import net.minecraft.client.Minecraft;
@@ -18,9 +17,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiFluxFurnace  extends GuiContainer
+public class GuiFluxFurnace extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/flux_furnace_gui.png");
+    private static final ResourceLocation texture = new ResourceLocation(MainModReference.MODID + ":textures/gui/flux_furnace_gui.png");
     private final TileEntityFluxFurnace entity;
 
     public GuiFluxFurnace(InventoryPlayer player, TileEntityFluxFurnace entity)
@@ -66,7 +65,7 @@ public class GuiFluxFurnace  extends GuiContainer
     			(int)(processProgress * process_bar_width), 
     			 process_bar_height);
     	
-    	for ( int i = 0; i < ModTileEntity.fuel_slots; i++)
+    	for ( int i = 0; i < TileEntityFluxFurnace.fuel_slots; i++)
     	{
     		double burnRemaining = entity.fractionOfFuelRemaining(i);
     		int yOffset = (int)((1.0 - burnRemaining) * flame_height);
@@ -101,7 +100,7 @@ public class GuiFluxFurnace  extends GuiContainer
     		text.add(processPercentage + "%");
     	}
     	
-    	for(int i = 0; i < ModTileEntity.fuel_slots; i++)
+    	for(int i = 0; i < TileEntityFluxFurnace.fuel_slots; i++)
     	{
         	if (isInRect(guiLeft + flame_xpos + flame_x_spacing * i, guiTop + flame_ypos, flame_width, flame_height, mouseX, mouseY))
         	{
