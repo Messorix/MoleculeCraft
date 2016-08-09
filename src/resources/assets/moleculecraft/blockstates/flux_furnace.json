@@ -1,9 +1,9 @@
 {
     "variants": {
-    	"facing=north": { "model": "moleculecraft:flux_furnace" },
+        "facing=north": { "model": "moleculecraft:flux_furnace" },
         "facing=south": { "model": "moleculecraft:flux_furnace", "y": 180 },
         "facing=west":  { "model": "moleculecraft:flux_furnace", "y": 270 },
         "facing=east":  { "model": "moleculecraft:flux_furnace", "y": 90 },
-        "inventory": { "model": "moleculecraft:flux_furnace" }
+		"inventory": {"model": "moleculecraft:flux_furnace"}
     }
 }
