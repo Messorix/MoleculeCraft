@@ -405,13 +405,13 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 			ModLogger.logWarningMessage("Process time got");
 			return processTime;
 		}
-		
+		if (burnTimeRemaining == null) burnTimeRemaining = new int[fuel_slots];
 		if (id >= first_burn_time_remaining_field_id && id < first_burn_time_initial_field_id)
 		{
 			ModLogger.logWarningMessage("Burn time remaining got");
 			return burnTimeRemaining[id - first_burn_time_remaining_field_id];
 		}
-		
+		if(burnTimeInitial == null) burnTimeInitial = new int[fuel_slots];
 		if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
 			ModLogger.logWarningMessage("Burn time initial got");
@@ -429,11 +429,13 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 			ModLogger.logWarningMessage("Process time change.");
 			processTime = (short)value;
 		}
+		if (burnTimeRemaining == null) burnTimeRemaining = new int[fuel_slots];
 		else if (id >= first_burn_time_remaining_field_id && id < first_burn_time_remaining_field_id + fuel_slots)
 		{
 			ModLogger.logWarningMessage("Burn time remaining change");
 			burnTimeRemaining[id - first_burn_time_remaining_field_id] = value;
 		}
+		if(burnTimeInitial == null) burnTimeInitial = new int[fuel_slots];
 		else if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
 			ModLogger.logWarningMessage("Burn Time inital change");
