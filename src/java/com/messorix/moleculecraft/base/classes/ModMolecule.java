@@ -6,13 +6,12 @@ public class ModMolecule extends ModMoleculeBase {
 	private ArrayList<ModMoleculeBase> atomsAndMolecules = new ArrayList<>();
 
 	public ModMolecule() {
-		
+
 	}
 
 	public ArrayList<ModMoleculeBase> getAtomsAndMolecules() {
 		return this.atomsAndMolecules;
 	}
-	
 
 	public void addMolecule(ModMoleculeBase molecule) {
 		atomsAndMolecules.add(molecule);
