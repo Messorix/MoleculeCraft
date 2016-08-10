@@ -2,8 +2,10 @@ package com.messorix.moleculecraft.base;
 
 import com.anime.basic.MainModReference;
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
+import com.messorix.moleculecraft.base.events.ItemOverlayEvent;
 import com.messorix.moleculecraft.base.proxies.CommonProxy;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -36,6 +38,7 @@ public class MoleculecraftBase
     public void init(FMLInitializationEvent e) {
     	MoleculecraftBase.proxy.init(e);
     	ModTileEntities.registerTileEntities();
+    	MinecraftForge.EVENT_BUS.register(new ItemOverlayEvent());
     }
 
     @EventHandler
