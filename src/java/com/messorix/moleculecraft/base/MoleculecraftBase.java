@@ -3,6 +3,7 @@ package com.messorix.moleculecraft.base;
 import com.anime.basic.MainModReference;
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
 import com.messorix.moleculecraft.base.events.ItemOverlayEvent;
+import com.messorix.moleculecraft.base.oredict.ModOreDictionary;
 import com.messorix.moleculecraft.base.proxies.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +29,7 @@ public class MoleculecraftBase
     public static ModItems items = new ModItems();
     public static ModRecipes recipes = new ModRecipes();
     public static MoleculeCraftTab moleculeCraftTab = new MoleculeCraftTab();
+    public static ModOreDictionary oreDict;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
