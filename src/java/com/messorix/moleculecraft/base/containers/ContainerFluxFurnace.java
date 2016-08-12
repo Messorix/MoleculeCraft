@@ -2,6 +2,7 @@ package com.messorix.moleculecraft.base.containers;
 
 import com.messorix.moleculecraft.base.crafting.FluxFurnaceRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
+import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -27,59 +28,80 @@ public class ContainerFluxFurnace extends ModContainer
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
 	{
-		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
-		
-		if (sourceSlot == null || !sourceSlot.getHasStack())
+		ItemStack itemstack = null;
+		Slot slot = (Slot)this.inventorySlots.get(par2);
+
+		if (slot != null && slot.getHasStack())
 		{
-			return null;
-		}
-		
-		ItemStack sourceStack =  sourceSlot.getStack();
-		ItemStack copyOfSourceStack = sourceStack.copy();
-		
-		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
-		{
-			if (FluxFurnaceRecipes.instance().getProcessingResult(sourceStack) != null)
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+
+			// If item is in the TE's inventory
+			if (par2 >= vanilla_slots && par2 <  first_output_index + output_slots)
 			{
-				if (!mergeItemStack(sourceStack, first_input_index, first_input_index + input_slots, false))
+				// Try to place in player inventory / action bar
+				if (!this.mergeItemStack(itemstack1, first_vanilla_index, vanilla_slots, false))
 				{
 					return null;
 				}
 			}
-			else if (TileEntityFluxFurnace.getItemBurnTime(sourceStack) > 0)
+			// Item is in inventory / hotbar, try to place in the in TE if possible if not move in inventory
+			else
 			{
-				if (!mergeItemStack(sourceStack, first_fuel_index, first_fuel_index + fuel_slots, true))
+				// If item is a part of a recipe
+				if (FluxFurnaceRecipes.instance().getProcessingResult(itemstack1) != null)
 				{
-					return null;
+					if (!this.mergeItemStack(itemstack1, first_input_index, first_input_index + input_slots, false))
+					{
+						return null;	
+					}
+				}
+				// If item is fuel
+				else if (TileEntityFluxGrinder.getItemBurnTime(itemstack1) > 0) {
+					if (!this.mergeItemStack(itemstack1, first_fuel_index, first_fuel_index + fuel_slots, false))
+					{
+						return null;
+					}
+				}
+				// Item in player's inventory, but not in action bar
+				else if (par2 >= hotbar && par2 < vanilla_slots)
+				{
+					// place in action bar
+					if (!this.mergeItemStack(itemstack1, first_vanilla_index, hotbar, false))
+					{
+						return null;
+					}
+				}
+				// Item in action bar - place in player inventory
+				else if (par2 >= 0 && par2 < 9)
+				{
+					if (!this.mergeItemStack(itemstack1, 9, 36, false))
+					{
+						return null;
+					}
 				}
 			}
-		}
-		else if (sourceSlotIndex > first_fuel_index && sourceSlotIndex < first_fuel_index + process_slots)
-		{
-			if (!mergeItemStack(sourceStack, first_vanilla_index, first_vanilla_index + vanilla_slots, false))
+
+			if (itemstack1.stackSize == 0)
+			{
+				slot.putStack((ItemStack)null);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+
+			if (itemstack1.stackSize == itemstack.stackSize)
 			{
 				return null;
 			}
+
+			slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
 		}
-		else
-		{
-			System.err.println("Invalid slotIndex: " + sourceSlotIndex);
-			return null;
-		}
-		
-		if (sourceStack.stackSize == 0)
-		{
-			sourceSlot.putStack(null);
-		}
-		else
-		{
-			sourceSlot.onSlotChanged();
-		}
-		
-		sourceSlot.onPickupFromSlot(player, sourceStack);
-		return copyOfSourceStack;
+
+		return itemstack;
 	}
 	
 	@Override

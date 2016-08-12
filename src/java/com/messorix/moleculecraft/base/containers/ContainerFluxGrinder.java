@@ -1,6 +1,5 @@
 package com.messorix.moleculecraft.base.containers;
 
-import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.crafting.FluxGrinderRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
@@ -28,6 +27,7 @@ public class ContainerFluxGrinder extends ModContainer
 		tileEntityFluxGrinder = tileentity;
 	}
 	
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
 	{
 		ItemStack itemstack = null;
@@ -68,7 +68,6 @@ public class ContainerFluxGrinder extends ModContainer
 				// Item in player's inventory, but not in action bar
 				else if (par2 >= hotbar && par2 < vanilla_slots)
 				{
-					ModLogger.logWarningMessage("Main shift click");
 					// place in action bar
 					if (!this.mergeItemStack(itemstack1, first_vanilla_index, hotbar, false))
 					{
@@ -78,7 +77,6 @@ public class ContainerFluxGrinder extends ModContainer
 				// Item in action bar - place in player inventory
 				else if (par2 >= 0 && par2 < 9)
 				{
-					ModLogger.logWarningMessage("Hotbar shift click");
 					if (!this.mergeItemStack(itemstack1, 9, 36, false))
 					{
 						return null;
