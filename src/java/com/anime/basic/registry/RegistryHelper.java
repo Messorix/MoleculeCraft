@@ -106,6 +106,15 @@ public class RegistryHelper {
 	}
 	
 	/**
+	 * Wraps to registerObjectToOreDict, but adds dust as a prefix to oreMaterial.
+	 * @param block The dust Item to be added to Forge's OreDictionary.
+	 * @param oreMaterial The material name(example: "Copper").
+	 */
+	public static void addDustToOreDict(Item item, String dustMaterial) {
+		registerObjectToOreDict(item, "dust" + dustMaterial);
+	}
+	
+	/**
 	 * Registers the model from the items unlocalized name and MainModReference.MODID
 	 * @param item The item that will be bound to that model
 	 * @param meta The metadata of the item.

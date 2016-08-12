@@ -1,5 +1,6 @@
 package com.messorix.moleculecraft.base.containers;
 
+import com.messorix.moleculecraft.base.crafting.FluxFurnaceRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +41,7 @@ public class ContainerFluxFurnace extends ModContainer
 		
 		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
 		{
-			if (TileEntityFluxFurnace.getProcessingResultForItem(sourceStack) != null)
+			if (FluxFurnaceRecipes.instance().getProcessingResult(sourceStack) != null)
 			{
 				if (!mergeItemStack(sourceStack, first_input_index, first_input_index + input_slots, false))
 				{
