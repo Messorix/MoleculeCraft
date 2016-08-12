@@ -1,4 +1,5 @@
 - Lithium-ion battery 
+	- plastic shell: 
 	- positive electrode: LiCoO2/LiFePO4/LiMn2O4 (solid)
 	- negative electrode: graphite (solid)
 	- electrolyte

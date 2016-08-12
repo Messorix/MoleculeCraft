@@ -58,8 +58,8 @@ public class RecipeHelper {
 					crafting.add(craftingSlots[i]);
 				}
 				for (i = 0; i < chars.length; i++) {
-					crafting.add(craftingObjects[i]);
 					crafting.add(chars[i]);
+					crafting.add(craftingObjects[i]);
 				}
 				return crafting.toArray();
 			} else ModLogger.logErrorMessage("Trying to add Crafting Recipe chars and craftingObjects lengths not equal." + craftingObjects[craftingObjects.length-1]);
@@ -78,8 +78,10 @@ public class RecipeHelper {
 		if (result != null) {
 			ItemStack stack;
 			if (result instanceof Block) {
-				stack = new ItemStack(Item.getItemFromBlock((Block)result), resultAmount, metaResult);
-			} else stack = new ItemStack((Item)result, resultAmount, metaResult);
+                stack = new ItemStack(Item.getItemFromBlock((Block)result), resultAmount, metaResult);
+            } else if (result instanceof ItemStack) {
+                stack = (ItemStack) result;
+            } else stack = new ItemStack((Item)result, resultAmount, metaResult);
 			if (!shapeless) {
 				GameRegistry.addShapedRecipe(stack, crafting);
 			} else {

@@ -110,8 +110,8 @@ public class RegistryHelper {
 	 * @param block The dust Item to be added to Forge's OreDictionary.
 	 * @param oreMaterial The material name(example: "Copper").
 	 */
-	public static void addDustToOreDict(Item item, String dusttMaterial) {
-		registerObjectToOreDict(item, "dust" + dusttMaterial);
+	public static void addDustToOreDict(Item item, String dustMaterial) {
+		registerObjectToOreDict(item, "dust" + dustMaterial);
 	}
 	
 	/**
