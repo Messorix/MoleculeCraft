@@ -21,8 +21,7 @@ public class TileEntityFluxGrinder extends ModTileEntity
 		return "container.tile_entity_flux_grinder.name";
 	}
 
-	public void setCustomInventoryName(String displayName) {
-	}
+	public void setCustomInventoryName(String displayName) {}
 
 	@Override
 	public void update() {
@@ -45,9 +44,11 @@ public class TileEntityFluxGrinder extends ModTileEntity
 					processTime = 0;
 				}
 			} else {
-				for (int i = 0; i < burnTimeRemaining.length; i++) {
-					if (burnTimeRemaining[i] > 0) {
-						burnTimeRemaining[i]--;
+				if (burnTimeRemaining != null) {
+					for (int i = 0; i < burnTimeRemaining.length; i++) {
+						if (burnTimeRemaining[i] > 0) {
+							burnTimeRemaining[i]--;
+						}
 					}
 				}
 				processTime = 0;
@@ -103,7 +104,7 @@ public class TileEntityFluxGrinder extends ModTileEntity
 		return false;
 	}
 
-	private void setup()
+	public void setup()
 	{
 		if (!setupDone)
 		{
