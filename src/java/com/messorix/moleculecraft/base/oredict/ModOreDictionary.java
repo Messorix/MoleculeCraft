@@ -13,9 +13,9 @@ public class ModOreDictionary {
 	}
 	
 	public void addOresToOreDictionary() {
-		RegistryHelper.addOreToOreDict(ModBlocks.ACANTHITEORE, "Silver");
-		RegistryHelper.addOreToOreDict(ModBlocks.CASSITERITEORE, "Tin");
-		RegistryHelper.addOreToOreDict(ModBlocks.CHALCOCITEORE, "Copper");
+		RegistryHelper.addOreToOreDict(ModBlocks.ACANTHITE_ORE, "Silver");
+		RegistryHelper.addOreToOreDict(ModBlocks.CASSITERITE_ORE, "Tin");
+		RegistryHelper.addOreToOreDict(ModBlocks.CHALCOCITE_ORE, "Copper");
 	}
 	
 	public void addIngotsToOreDictionary() {

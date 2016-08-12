@@ -19,7 +19,7 @@ public class FluxGrinderRecipes extends ModRecipes
     private FluxGrinderRecipes()
     {
         addProcessingRecipe(
-                new ItemStack(Item.getItemFromBlock(ModBlocks.CHALCOCITEORE)), 
+                new ItemStack(Item.getItemFromBlock(ModBlocks.CHALCOCITE_ORE)), 
                 new ItemStack(ModItems.COPPERDUST, 2), 0.7F);
         addProcessingRecipe(
                 new ItemStack(ModItems.COPPERINGOT), 
