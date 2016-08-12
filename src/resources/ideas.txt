@@ -1,3 +1,4 @@
 - construct blocks (f.e. block of iron) from extracted molecules/atoms
 - discover molecules/atoms (a la thaumcraft)
 - generate rf out of f.e. hydrogen and nuclear
+	- hydrogen power: https://en.wikipedia.org/wiki/Hydrogen_fuel

@@ -1,19 +1,16 @@
 package com.messorix.moleculecraft.base.blocks;
 
-import com.anime.basic.MainModReference;
-import com.anime.basic.network.GuiHandler;
-
-import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.anime.basic.MainModReference;
+import com.anime.basic.network.GuiHandler;
 import com.messorix.moleculecraft.base.ModBlocks;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;

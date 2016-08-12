@@ -1,10 +1,11 @@
-//Creative Tabs
+#Creative Tabs
 itemGroup.MoleculeCraft Base=MoleculeCraft
 
-//Containers
+#Containers
 container.tile_entity_flux_grinder.name=Flux Grinder
+container.tile_entity_flux_furnace.name=Flux Furnace
 
-//Items
+#Items
 item.copper_ingot.name=Copper Ingot
 item.copper_dust.name=Copper Dust
 item.li_battery.name=Li-Ion Battery
@@ -14,11 +15,11 @@ item.lfp_electrode.name=LFP Electrode
 item.graphite.name=Graphite
 item.lipo_casing.name=LiPo Casing
 
-//Ores
+#Ores
 tile.chalcocite_ore.name=Chalcocite Ore
 tile.acanthite_ore.name=Acanthite Ore
 tile.cassiterite_ore.name=Cassiterite Ore
 
-//Machines
+#Machines
 tile.flux_furnace.name=Flux Furnace
 tile.flux_grinder.name=Flux Grinder
