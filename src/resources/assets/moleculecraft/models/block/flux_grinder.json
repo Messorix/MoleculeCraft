@@ -1,8 +1,8 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "top": "moleculecraft:blocks/flux_grinder_rest",
+        "top": "moleculecraft:blocks/flux_machines_rest",
         "front": "moleculecraft:blocks/flux_grinder_front",
-        "side": "moleculecraft:blocks/flux_grinder_rest"
+        "side": "moleculecraft:blocks/flux_machines_rest"
     }
 }

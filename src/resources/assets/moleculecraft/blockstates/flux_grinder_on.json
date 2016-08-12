@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=north": { "model": "moleculecraft:flux_grinder_on" },
+        "facing=south": { "model": "moleculecraft:flux_grinder_on", "y": 180 },
+        "facing=west":  { "model": "moleculecraft:flux_grinder_on", "y": 270 },
+        "facing=east":  { "model": "moleculecraft:flux_grinder_on", "y": 90 },
+		"inventory": {"model": "moleculecraft:flux_grinder_on"}
+    }
+}

@@ -22,11 +22,9 @@ import net.minecraft.world.World;
 
 public class BlockFluxGrinder extends BlockMachine 
 {
-	public BlockFluxGrinder() 
+	public BlockFluxGrinder(String unlocalizedName, String registryName, boolean isOn) 
 	{
-		super("flux_grinder", "flux_grinder", Material.ROCK, false);
-		//burning_sides = PropertyInteger.create("burning_sides", 0, 1);
-		//one_side_light_value = 15;
+		super(unlocalizedName, registryName, Material.IRON, isOn);
 	}
 
 	public TileEntity createNewTileEntity(World worldIn, int meta)
@@ -36,7 +34,7 @@ public class BlockFluxGrinder extends BlockMachine
 
     public static void setState(boolean active, World worldIn, BlockPos pos)
     {
-    	BlockMachine.setState(active, worldIn, pos, ModBlocks.FLUXGRINDERWORKING, ModBlocks.FLUXGRINDER);
+    	BlockMachine.setState(active, worldIn, pos, ModBlocks.FLUX_GRINDER_ON, ModBlocks.FLUX_GRINDER);
     }
 
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
@@ -72,7 +70,7 @@ public class BlockFluxGrinder extends BlockMachine
 
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return super.getItem(worldIn, pos, state, ModBlocks.FLUXGRINDER); 
+        return super.getItem(worldIn, pos, state, ModBlocks.FLUX_GRINDER); 
     }
 
     @Override
@@ -88,12 +86,4 @@ public class BlockFluxGrinder extends BlockMachine
        	return true;
     }
     
-    /*@Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
-    	TileEntityFluxGrinder te = (TileEntityFluxGrinder)world.getTileEntity(pos);
-    	int burningSlots = te.numberOfBurningFuelSlots();
-    	burningSlots = MathHelper.clamp_int(burningSlots, 0, 1);
-    	return super.getActualState(state, world, pos, burningSlots);
-    }*/
 }

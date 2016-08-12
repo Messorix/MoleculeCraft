@@ -22,23 +22,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public abstract class BlockMachine extends ModBlock implements ITileEntityProvider
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-//    private final boolean isWorking;
+    
+    public final boolean isWorking;
+    
     protected static boolean keepInventory;
-    /*protected static PropertyInteger burning_sides;
-    protected static int one_side_light_value;
-    protected static int two_side_light_value;
-    protected static int three_side_light_value;
-    protected static int four_side_light_value;*/
     
 	public BlockMachine(String unlocalizedName, String registryName, Material material, boolean isWorking) {
 		super(unlocalizedName, registryName, material);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-//        this.isWorking = isWorking;
+        this.isWorking = isWorking;
 	}
 
     @Nullable
@@ -51,7 +49,7 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
     {
         this.setDefaultFacing(worldIn, pos, state);
     }
-
+    
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
     {
         if (!worldIn.isRemote)
@@ -92,11 +90,9 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
         if (active)
         {
             worldIn.setBlockState(pos, workingBlock.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, workingBlock.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else
         {
-            worldIn.setBlockState(pos, notWorkingBlock.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
             worldIn.setBlockState(pos, notWorkingBlock.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
 
@@ -178,41 +174,18 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
     
-    /*public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos, int burningSlots)
-    {
-    	return getDefaultState().withProperty(burning_sides, burningSlots);
-    }*/
-
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
     
-	/*@Override
+	@Override
     public int getLightValue(IBlockAccess world, BlockPos pos)
     {
-    	int lightValue = 0;
-    	IBlockState state = getActualState(getDefaultState(), world, pos);
-    	int burningSides = state.getValue(burning_sides).intValue();
-    	
-    	switch (burningSides)
-    	{
-			case 4:
-				lightValue += (int)((four_side_light_value - three_side_light_value) / (4.0 - 3.0) * burningSides);
-			case 3:
-				lightValue += (int)((three_side_light_value - two_side_light_value) / (3.0 - 2.0) * burningSides);
-			case 2:
-				lightValue += (int)((two_side_light_value - one_side_light_value) / (2.0 - 1.0) * burningSides);
-			case 1:
-				lightValue += one_side_light_value;
-				break;
-			default:
-				break;
-    	}
-    	
-    	lightValue = MathHelper.clamp_int(lightValue, 0, four_side_light_value);
-    	return lightValue;
-    }*/
+		if (isWorking == true) {
+			return 15;
+		} else return 0;
+    }
 	
 	public EnumBlockRenderType renderType(IBlockState state)
 	{
