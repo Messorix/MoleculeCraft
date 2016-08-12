@@ -14,6 +14,7 @@ public class ModItems
 	public static ModItem LMOELECTRODE;
 	public static ModItem LFPELECTRODE;
 	public static ModItem GRAPHITE;
+	public static ModItem LIPOCASING;
 	
 	public static ModItemEnergy LITHIUMIONBATTERY;
     public static List<ModItem> itemlist = new ArrayList<ModItem>();
@@ -38,6 +39,8 @@ public class ModItems
 		itemlist.add(LFPELECTRODE);
 		RegistryHelper.registerItem(GRAPHITE = new ItemGraphite(), ItemGraphite.NAME);
 		itemlist.add(GRAPHITE);
+		RegistryHelper.registerItem(LIPOCASING = new ItemLiPoCasing(), ItemLiPoCasing.NAME);
+		itemlist.add(LIPOCASING);
 
     }
     
