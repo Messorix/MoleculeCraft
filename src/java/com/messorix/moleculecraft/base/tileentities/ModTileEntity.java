@@ -149,7 +149,7 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 
 				if (result != null) {
 					for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-						
+						ModLogger.logInfoMessage("Process Item: " + output_slots);
 						ItemStack outputStack = itemStacks[outputSlot];
 
 						if (outputStack == null) {
@@ -416,7 +416,6 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 			return burnTimeInitial[id - first_burn_time_initial_field_id];
 		}
 		
-		System.err.println("Invalid field ID in TileInventoryProcessing.getField: " + id);
 		return 0;
 	}
 
@@ -438,7 +437,6 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 		}
 		else
 		{
-			System.err.println("Invalid field ID in TileInventoryProcessing.getField: " + id);
 		}
 	}
 
@@ -484,4 +482,7 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 		return false;
 	}
+	
+	public void setup() {}
+	
 }

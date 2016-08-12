@@ -12,11 +12,11 @@ public abstract class ModContainer extends Container {
 	protected ModTileEntity tileEntity;
 	protected int[] cachedFields;
 
-	protected final int hotbar = 9;
-	protected final int player_inventory_row = 3;
-	protected final int player_inventory_column = 9;
-	protected final int player_inventory = player_inventory_row * player_inventory_column;
-	protected final int vanilla_slots = hotbar + player_inventory;
+	protected int hotbar = 9;
+	protected int player_inventory_row = 3;
+	protected int player_inventory_column = 9;
+	protected int player_inventory = player_inventory_row * player_inventory_column;
+	protected int vanilla_slots = hotbar + player_inventory;
 
 	public int fuel_slots = 0;
 	public int input_slots = 0;
@@ -25,12 +25,12 @@ public abstract class ModContainer extends Container {
 
 	protected final int first_vanilla_index = 0;
 	protected final int first_fuel_index = first_vanilla_index + vanilla_slots;
-	protected final int first_input_index;
-	protected final int first_output_index;
+	protected int first_input_index;
+	protected int first_output_index;
 
-	protected final int first_fuel_slot = 0;
-	protected final int first_input_slot;
-	protected final int first_output_slot;
+	protected int first_fuel_slot = 0;
+	protected int first_input_slot;
+	protected int first_output_slot;
 	
 	public ModContainer(InventoryPlayer player, ModTileEntity tileentity)
 	{
@@ -70,36 +70,6 @@ public abstract class ModContainer extends Container {
 			}
 		}
 
-		//Fuel slots
-		final int fuel_slots_xpos = 56;
-		final int fuel_slots_ypos = 53;
-		
-		for (int x = 0; x < ModTileEntity.fuel_slots; x++)
-		{
-			int slotNumber = x + first_fuel_slot;
-			addSlotToContainer(new SlotFuel(tileEntity, slotNumber, fuel_slots_xpos + ((slot_x_spacing + 4) * x), fuel_slots_ypos));
-		}
-		
-		//Input slots
-		final int input_slots_xpos = 56;
-		final int input_slots_ypos = 17;
-		
-		for (int x = 0; x < ModTileEntity.input_slots; x++)
-		{
-			int SlotNumber = x + first_input_slot;
-			addSlotToContainer(new SlotProcessableInput(tileEntity, SlotNumber, input_slots_xpos + ((slot_x_spacing + 4) * x), input_slots_ypos));
-		}
-
-		//Output slots
-		final int output_slots_xpos = 112;
-		final int output_slots_ypos = 35;
-		
-		for (int x = 0; x < ModTileEntity.output_slots; x++)
-		{
-			int SlotNumber = x + first_output_slot;
-			addSlotToContainer(new SlotOutput(tileEntity, SlotNumber, output_slots_xpos + ((slot_x_spacing + 4) * x), output_slots_ypos));
-		}
-		
 	}
 	
 	public class SlotFuel extends Slot

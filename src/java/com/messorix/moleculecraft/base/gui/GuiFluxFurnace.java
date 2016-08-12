@@ -32,8 +32,8 @@ public class GuiFluxFurnace extends GuiContainer
         this.entity = entity;
     }
 
-    final int process_bar_xpos = 49;
-    final int process_bar_ypos = 60;
+    final int process_bar_xpos = 79;
+    final int process_bar_ypos = 35;
     final int process_bar_icon_u = 176;
     final int process_bar_icon_v = 14;
     final int process_bar_width = 24;

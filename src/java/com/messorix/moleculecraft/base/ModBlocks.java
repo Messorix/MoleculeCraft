@@ -40,8 +40,9 @@ public class ModBlocks
 		modblocklist.add(FLUX_GRINDER);
 		RegistryHelper.registerBlock(FLUX_GRINDER_ON = new BlockFluxGrinder("flux_grinder_on", "flux_grinder_on", true), BlockFluxGrinder.NAME);
 		modblocklist.add(FLUX_GRINDER_ON);
-		RegistryHelper.registerBlock(FLUX_FURNACE = new BlockFluxFurnace(), BlockFluxFurnace.NAME);
+		RegistryHelper.registerBlock(FLUX_FURNACE = new BlockFluxFurnace("flux_furnace", "flux_furnace", false), BlockFluxFurnace.NAME);
 		modblocklist.add(FLUX_FURNACE);
+		RegistryHelper.registerBlock(FLUX_FURNACE_ON = new BlockFluxFurnace("flux_furnace_on", "flux_furnace_on", true), BlockFluxFurnace.NAME);
 	}
 
 	public void setBlockModels()

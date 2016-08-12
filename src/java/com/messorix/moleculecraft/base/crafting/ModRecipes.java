@@ -4,12 +4,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.anime.basic.logger.ModLogger;
 import com.google.common.collect.Maps;
 
 import net.minecraft.item.ItemStack;
 
 public class ModRecipes {
+	
     private final Map<ItemStack, ItemStack> processingList = Maps.newHashMap();
     private final Map<ItemStack, Float> experienceList = Maps.newHashMap();
     
@@ -32,12 +32,10 @@ public class ModRecipes {
      */
 	public ItemStack getProcessingResult(ItemStack stack)
     {
-		ModLogger.logInfoMessage("Process stacks: " + stack.getItem());
         for (Entry<ItemStack, ItemStack> entry : this.processingList.entrySet())
         {
             if (this.areItemStacksEqual(stack, (ItemStack)entry.getKey()))
             {
-            	ModLogger.logInfoMessage("Return: " + entry.getValue().getItem());
                 return (ItemStack)entry.getValue();
             }
         }
@@ -45,13 +43,9 @@ public class ModRecipes {
         return null;
     }
 
-    private boolean areItemStacksEqual(ItemStack parItemStack1, 
-          ItemStack parItemStack2)
+    protected boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2)
     {
-        return parItemStack2.getItem() == parItemStack1.getItem() 
-              && (parItemStack2.getMetadata() == 32767 
-              || parItemStack2.getMetadata() == parItemStack1
-              .getMetadata());
+        return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == 32767 || parItemStack2.getMetadata() == parItemStack1.getMetadata());
     }
 
     public Map<ItemStack, ItemStack> getProcessingList()

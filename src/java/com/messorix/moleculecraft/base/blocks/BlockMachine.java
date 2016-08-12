@@ -1,8 +1,11 @@
 package com.messorix.moleculecraft.base.blocks;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
+
+import com.messorix.moleculecraft.base.ModBlocks;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -11,6 +14,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
@@ -38,13 +42,15 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.isWorking = isWorking;
 	}
-
+	
+	@Override
     @Nullable
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.FURNACE);
     }
-
+    
+    @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.setDefaultFacing(worldIn, pos, state);
@@ -105,29 +111,33 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
         }
     }
     
+    @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
+    @Override
     public boolean hasComparatorInputOverride(IBlockState state)
     {
         return true;
     }
 
+    @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
     {
         return Container.calcRedstone(worldIn.getTileEntity(pos));
     }
-
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state, BlockMachine item)
-    {
-        return new ItemStack(item);
+    
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+    	return new ItemStack(ModBlocks.FLUX_GRINDER);
     }
     
     /**
      * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
      */
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
@@ -136,6 +146,7 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         EnumFacing enumfacing = EnumFacing.getFront(meta);
@@ -151,6 +162,7 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return ((EnumFacing)state.getValue(FACING)).getIndex();
@@ -160,6 +172,7 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
      * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
      * blockstate.
      */
+    @Override
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
@@ -169,11 +182,13 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
      * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
      * blockstate.
      */
+    @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
     
+    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});
@@ -187,8 +202,9 @@ public abstract class BlockMachine extends ModBlock implements ITileEntityProvid
 		} else return 0;
     }
 	
-	public EnumBlockRenderType renderType(IBlockState state)
-	{
-		return EnumBlockRenderType.MODEL;
+    @Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+		if (!isWorking) list.add(new ItemStack(this));
 	}
+	
 }

@@ -18,13 +18,51 @@ public class ContainerFluxGrinder extends ModContainer
 	public ContainerFluxGrinder(InventoryPlayer player, TileEntityFluxGrinder tileentity)
 	{
 		super(player, tileentity);
-		
+
 		super.fuel_slots = 1;
 		super.input_slots = 1;
 		super.output_slots = 2;
 		super.process_slots = fuel_slots + input_slots + output_slots;
+
+		first_input_index = first_fuel_index + TileEntityFluxGrinder.fuel_slots;
+		first_output_index = first_input_index + TileEntityFluxGrinder.input_slots;
+		first_input_slot = first_fuel_slot + TileEntityFluxGrinder.fuel_slots;
+		first_output_slot = first_input_slot + TileEntityFluxGrinder.input_slots;
 		
 		tileEntityFluxGrinder = tileentity;
+
+		final int slot_x_spacing = 18;
+
+		//Fuel slots
+		final int fuel_slots_xpos = 56;
+		final int fuel_slots_ypos = 53;
+
+		for (int x = 0; x < TileEntityFluxGrinder.fuel_slots; x++)
+		{
+			int slotNumber = x + first_fuel_slot;
+			addSlotToContainer(new SlotFuel(tileEntity, slotNumber, fuel_slots_xpos + ((slot_x_spacing + 4) * x), fuel_slots_ypos));
+		}
+
+		//Input slots
+		final int input_slots_xpos = 56;
+		final int input_slots_ypos = 17;
+
+		for (int x = 0; x < TileEntityFluxGrinder.input_slots; x++)
+		{
+			int SlotNumber = x + first_input_slot;
+			addSlotToContainer(new SlotProcessableInput(tileEntity, SlotNumber, input_slots_xpos + ((slot_x_spacing + 4) * x), input_slots_ypos));
+		}
+
+		//Output slots
+		final int output_slots_xpos = 112;
+		final int output_slots_ypos = 35;
+
+		for (int x = 0; x < TileEntityFluxGrinder.output_slots; x++)
+		{
+			int SlotNumber = x + first_output_slot;
+			addSlotToContainer(new SlotOutput(tileEntity, SlotNumber, output_slots_xpos + ((slot_x_spacing + 4) * x), output_slots_ypos));
+		}
+
 	}
 	
 	@Override
