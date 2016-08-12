@@ -22,66 +22,86 @@ public class ContainerFluxGrinder extends ModContainer
 		super.fuel_slots = 1;
 		super.input_slots = 1;
 		super.output_slots = 2;
+		super.process_slots = fuel_slots + input_slots + output_slots;
 		
 		tileEntityFluxGrinder = tileentity;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
 	{
-		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
-		
-		if (sourceSlot == null || !sourceSlot.getHasStack())
+		ItemStack itemstack = null;
+		Slot slot = (Slot)this.inventorySlots.get(par2);
+
+		if (slot != null && slot.getHasStack())
 		{
-			return null;
-		}
-		
-		ItemStack sourceStack =  sourceSlot.getStack();
-		ItemStack copyOfSourceStack = sourceStack.copy();
-		
-		if(sourceSlotIndex >= first_vanilla_index && sourceSlotIndex < first_vanilla_index + vanilla_slots)
-		{
-			if (TileEntityFluxGrinder.getProcessingResultForItem(FluxGrinderRecipes.instance(), sourceStack) != null)
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+
+			// If item is in the TE's inventory
+			if (par2 >= vanilla_slots && par2 <  first_output_index + output_slots)
 			{
-				System.out.println(first_input_index + ", " + input_slots + ", " + (first_input_index + input_slots));
-				
-				if (!mergeItemStack(sourceStack, first_input_index, (int)(first_input_index + input_slots), false))
+				// Try to place in player inventory / action bar
+				if (!this.mergeItemStack(itemstack1, first_vanilla_index, vanilla_slots, false))
 				{
 					return null;
 				}
 			}
-			else if (TileEntityFluxGrinder.getItemBurnTime(sourceStack) > 0)
+			// Item is in inventory / hotbar, try to place in the in TE if possible if not move in inventory
+			else
 			{
-				if (!mergeItemStack(sourceStack, first_fuel_index, first_fuel_index + fuel_slots, false))
+				// If item is a part of a recipe
+				if (FluxGrinderRecipes.instance().getProcessingResult(itemstack1) != null)
 				{
-					return null;
+					if (!this.mergeItemStack(itemstack1, first_input_index, first_input_index + input_slots, false))
+					{
+						return null;	
+					}
+				}
+				// If item is fuel
+				else if (TileEntityFluxGrinder.getItemBurnTime(itemstack1) > 0) {
+					if (!this.mergeItemStack(itemstack1, first_fuel_index, first_fuel_index + fuel_slots, false))
+					{
+						return null;
+					}
+				}
+				// Item in player's inventory, but not in action bar
+				else if (par2 >= hotbar && par2 < vanilla_slots)
+				{
+					// place in action bar
+					if (!this.mergeItemStack(itemstack1, first_vanilla_index, hotbar, false))
+					{
+						return null;
+					}
+				}
+				// Item in action bar - place in player inventory
+				else if (par2 >= 0 && par2 < 9)
+				{
+					if (!this.mergeItemStack(itemstack1, 9, 36, false))
+					{
+						return null;
+					}
 				}
 			}
-		}
-		else if (sourceSlotIndex >= first_fuel_index && sourceSlotIndex < first_fuel_index + TileEntityFluxGrinder.total_slots)
-		{
-			if (!mergeItemStack(sourceStack, first_vanilla_index, first_vanilla_index + vanilla_slots, false))
+
+			if (itemstack1.stackSize == 0)
+			{
+				slot.putStack((ItemStack)null);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+
+			if (itemstack1.stackSize == itemstack.stackSize)
 			{
 				return null;
 			}
+
+			slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
 		}
-		else
-		{
-			System.err.println("Invalid slotIndex: " + sourceSlotIndex);
-			return null;
-		}
-		
-		if (sourceStack.stackSize == 0)
-		{
-			sourceSlot.putStack(null);
-		}
-		else
-		{
-			sourceSlot.onSlotChanged();
-		}
-		
-		sourceSlot.onPickupFromSlot(player, sourceStack);
-		return copyOfSourceStack;
+
+		return itemstack;
 	}
 	
 	@Override

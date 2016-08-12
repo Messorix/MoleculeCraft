@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.anime.basic.logger.ModLogger;
 import com.google.common.collect.Maps;
 
 import net.minecraft.item.ItemStack;
@@ -29,23 +30,19 @@ public class ModRecipes {
     /**
      * Returns the Processing result of an item.
      */
-	public ItemStack getProcessingResult(ItemStack parItemStack)
+	public ItemStack getProcessingResult(ItemStack stack)
     {
-        Iterator<?> iterator = processingList.entrySet().iterator();
-        Entry<?, ?> entry;
-
-        do
+		ModLogger.logInfoMessage("Process stacks: " + stack.getItem());
+        for (Entry<ItemStack, ItemStack> entry : this.processingList.entrySet())
         {
-            if (!iterator.hasNext())
+            if (this.areItemStacksEqual(stack, (ItemStack)entry.getKey()))
             {
-                return null;
+            	ModLogger.logInfoMessage("Return: " + entry.getValue().getItem());
+                return (ItemStack)entry.getValue();
             }
-
-            entry = (Entry<?, ?>)iterator.next();
         }
-        while (!areItemStacksEqual(parItemStack, (ItemStack)entry.getKey()));
 
-        return (ItemStack)entry.getValue();
+        return null;
     }
 
     private boolean areItemStacksEqual(ItemStack parItemStack1, 

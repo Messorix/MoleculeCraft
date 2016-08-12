@@ -14,10 +14,6 @@ public class TileEntityFluxGrinder extends ModTileEntity
 		setup();
 	}
 	
-	/*public static ItemStack getProcessingResultForItem(ItemStack stack){
-		return ModTileEntity.getProcessingResultForItem(FluxGrinderRecipes.instance(), FluxGrinderRecipes.instance().getProcessingResult(stack));
-	}*/
-
 	@Override
 	public String getName() {
 		return "container.tile_entity_flux_grinder.name";
@@ -101,6 +97,7 @@ public class TileEntityFluxGrinder extends ModTileEntity
 			burnTimeInitial = new int[fuel_slots];
 			burnTimeRemaining = new int[fuel_slots];
 			
+			/** Used in the calculation of getField **/
 			first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + fuel_slots);
 			number_of_fields = (byte) (first_burn_time_initial_field_id + fuel_slots);
 			

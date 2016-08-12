@@ -7,7 +7,7 @@ import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.crafting.ModRecipes;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
@@ -16,13 +16,14 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
-public class ModTileEntity extends TileEntity implements IInventory, ITickable {
+public class ModTileEntity extends TileEntity implements ISidedInventory, ITickable {
 	public static int fuel_slots = 0;
 	public static int input_slots = 0;
 	public static int output_slots = 0;
@@ -402,19 +403,16 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	public int getField(int id) {
 		if (id == process_field_id)
 		{
-			ModLogger.logWarningMessage("Process time got");
 			return processTime;
 		}
 		if (burnTimeRemaining == null) burnTimeRemaining = new int[fuel_slots];
 		if (id >= first_burn_time_remaining_field_id && id < first_burn_time_initial_field_id)
 		{
-			ModLogger.logWarningMessage("Burn time remaining got");
 			return burnTimeRemaining[id - first_burn_time_remaining_field_id];
 		}
 		if(burnTimeInitial == null) burnTimeInitial = new int[fuel_slots];
 		if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
-			ModLogger.logWarningMessage("Burn time initial got");
 			return burnTimeInitial[id - first_burn_time_initial_field_id];
 		}
 		
@@ -426,19 +424,16 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 	public void setField(int id, int value) {
 		if (id == process_field_id)
 		{
-			ModLogger.logWarningMessage("Process time change.");
 			processTime = (short)value;
 		}
 		if (burnTimeRemaining == null) burnTimeRemaining = new int[fuel_slots];
 		else if (id >= first_burn_time_remaining_field_id && id < first_burn_time_remaining_field_id + fuel_slots)
 		{
-			ModLogger.logWarningMessage("Burn time remaining change");
 			burnTimeRemaining[id - first_burn_time_remaining_field_id] = value;
 		}
 		if(burnTimeInitial == null) burnTimeInitial = new int[fuel_slots];
 		else if (id >= first_burn_time_initial_field_id && id < first_burn_time_initial_field_id + fuel_slots)
 		{
-			ModLogger.logWarningMessage("Burn Time inital change");
 			burnTimeInitial[id - first_burn_time_initial_field_id] = value;
 		}
 		else
@@ -474,4 +469,19 @@ public class ModTileEntity extends TileEntity implements IInventory, ITickable {
 
 	@Override
 	public void closeInventory(EntityPlayer player) {}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return null;
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return false;
+	}
 }

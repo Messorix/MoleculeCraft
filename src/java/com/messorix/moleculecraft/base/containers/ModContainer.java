@@ -21,7 +21,7 @@ public abstract class ModContainer extends Container {
 	public int fuel_slots = 0;
 	public int input_slots = 0;
 	public int output_slots = 0;
-	public final int process_slots = fuel_slots + input_slots + output_slots;
+	public int process_slots = fuel_slots + input_slots + output_slots;
 
 	protected final int first_vanilla_index = 0;
 	protected final int first_fuel_index = first_vanilla_index + vanilla_slots;

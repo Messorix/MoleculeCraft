@@ -14,10 +14,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 		setup();
 	}
 	
-	public static ItemStack getProcessingResultForItem(ItemStack stack){
-		return ModTileEntity.getProcessingResultForItem(FluxFurnaceRecipes.instance(), FluxFurnaceRecipes.instance().getProcessingResult(stack));
-	}
-
 	@Override
 	public String getName() {
 		return "container.tile_entity_flux_furnace.name";
