@@ -21,34 +21,34 @@ public class ModMoleculeBase {
 			switch(c)
 			{
 				case '0': 
-					returnable += "₀";
+					returnable += "⁰";
 					break;
 				case '1':
-					returnable += "₁";
+					returnable += "¹";
 					break;
 				case '2':
-					returnable += "₂";
+					returnable += "²";
 					break;
 				case '3':
-					returnable += "₃";
+					returnable += "³";
 					break;
 				case '4':
-					returnable += "₄";
+					returnable += "⁴";
 					break;
 				case '5':
-					returnable += "₅";
+					returnable += "⁵";
 					break;
 				case '6':
-					returnable += "₆";
+					returnable += "⁶";
 					break;
 				case '7':
-					returnable += "₇";
+					returnable += "⁷";
 					break;
 				case '8':
-					returnable += "₈";
+					returnable += "⁸";
 					break;
 				case '9':
-					returnable += "₉";
+					returnable += "⁹";
 					break;
 				default:
 					break;

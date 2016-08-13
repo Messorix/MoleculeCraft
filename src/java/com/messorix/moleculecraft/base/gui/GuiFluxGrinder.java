@@ -1,10 +1,10 @@
 package com.messorix.moleculecraft.base.gui;
 
 import java.awt.Color;
-import com.anime.basic.MainModReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anime.basic.MainModReference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxGrinder;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 

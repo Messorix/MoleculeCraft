@@ -1,0 +1,106 @@
+package com.messorix.moleculecraft.base.classes;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.anime.basic.logger.ModLogger;
+import com.messorix.moleculecraft.base.ModAtoms;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
+public class ModMolecules {
+	
+	private static Map<String, ModMolecule> MOLECULES = new HashMap<String, ModMolecule>();
+	
+	/** A Map containing the Molecule for a specified item/block with meta. **/
+	public static Map<ItemStack, ModMolecule> objectMolecules = new HashMap<ItemStack, ModMolecule>();
+	
+	/** Names of items from the OreDictionary(example oreCopper) **/
+	private static List<String> oreDictionaryNames = new ArrayList<String>();
+	
+	/** Whether or not the molecules have been created. **/
+	private static boolean moleculesCreated = false;
+	
+	/** Whether or not the ore dictionary names have been added. **/
+	private static boolean oreDictNamesAdded = false;
+	
+	/**
+	 * @param amount The amount of the molecule
+	 * @return A new molecule with the specified amount.
+	 */
+	public static ModMolecule createMolecule(int amount) {
+    	return (ModMolecule) new ModMolecule().setAmount(amount);
+    }
+    
+	/** Creates the molecules once. **/
+    public static void createMolecules() {
+    	if (!moleculesCreated) {
+    		ModAtoms atoms = new ModAtoms();
+    		MOLECULES.put("copper", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Cu").setAmount(2)).addAtom(atoms.getModAtomBySymbol("S").setAmount(1)));
+    		MOLECULES.put("silver", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Ag").setAmount(2)).addAtom(atoms.getModAtomBySymbol("S").setAmount(1)));
+    		MOLECULES.put("tin", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Sn").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(2)));
+    		MOLECULES.put("iron", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Fe").setAmount(1)));
+    		MOLECULES.put("gold", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Au").setAmount(1)));
+    		MOLECULES.put("coal", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
+    		MOLECULES.put("diamond", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(16)));
+    		MOLECULES.put("emerald", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Be").setAmount(3)).addAtom(atoms.getModAtomBySymbol("Al").setAmount(2)).addMolecule(createMolecule(6).addAtom(atoms.getModAtomBySymbol("Si").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(3))));
+    		// TODO Add more Molecules
+    		moleculesCreated = true;
+    		ModLogger.logInfoMessage("Succesfully created Molecules.");
+    	}
+    }
+	
+    /** Adds the Names to oreDictionaryNames. **/
+    private static void addOreDictNames() {
+    	if (!oreDictNamesAdded) {
+    		oreDictionaryNames.add("oreCopper");
+    		oreDictionaryNames.add("oreSilver");
+    		oreDictionaryNames.add("oreTin");
+    		oreDictionaryNames.add("oreIron");
+    		oreDictionaryNames.add("oreGold");
+    		oreDictionaryNames.add("oreCoal");
+    		oreDictionaryNames.add("oreDiamond");
+    		oreDictionaryNames.add("oreEmerald");
+    		// TODO Add more names
+    		oreDictNamesAdded = true;
+    		ModLogger.logInfoMessage("Succesfully added OreDictionay Names to List.");
+    	}
+    }
+    
+    /**  Binds the ItemStacks from the OreDictionary based on oreDictionaryNames. **/
+    public static void bindMolecules() {
+    	addOreDictNames();
+    	final String ore = "ore";
+    	final String dust = "dust";
+    	final String ingot = "ingot";
+    	names : for (String dictName : oreDictionaryNames) {
+    		if (dictName == null || dictName.isEmpty()) continue;
+    		ModMolecule molecule = null;
+    		if (dictName.startsWith(ore)) molecule = getMoleculeByMaterial(dictName.substring(3));
+    		if (dictName.startsWith(dust)) molecule = getMoleculeByMaterial(dictName.substring(4));
+    		if (dictName.startsWith(ingot)) molecule = getMoleculeByMaterial(dictName.substring(5));
+    		if (molecule == null) molecule = getMoleculeByMaterial(dictName);
+    		for (ItemStack stack : OreDictionary.getOres(dictName)) {
+    			if (molecule == null) break names;
+    			if (stack != null) objectMolecules.put(stack, molecule);
+    		}
+    	}
+    	ModLogger.logInfoMessage("Succesfully bound molecules to ItemStacks.");
+    }
+    
+    /**
+     * @param material The material for the molecule you want(example copper)
+     * @return ModMolecule from MOLECULES.
+     */
+    public static ModMolecule getMoleculeByMaterial(String material) {
+    	if (!moleculesCreated) createMolecules();
+    	material = material.toLowerCase();
+    	ModLogger.logInfoMessage("Material: " + material + ".");
+    	if (MOLECULES.containsKey(material)) return MOLECULES.get(material);
+    	return null;
+    }
+    
+}

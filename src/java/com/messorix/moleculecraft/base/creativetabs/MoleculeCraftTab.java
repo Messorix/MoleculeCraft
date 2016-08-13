@@ -17,7 +17,7 @@ public class MoleculeCraftTab extends CreativeTabs
 	
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem(){
-        ItemStack iStack = new ItemStack(ModItems.COPPERINGOT);
+        ItemStack iStack = new ItemStack(ModItems.COPPER_INGOT);
         return iStack.getItem();
     }
     

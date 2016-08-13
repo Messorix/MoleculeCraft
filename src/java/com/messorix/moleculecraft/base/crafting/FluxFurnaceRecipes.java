@@ -23,8 +23,8 @@ public class FluxFurnaceRecipes extends ModRecipes
 
     private FluxFurnaceRecipes()
     {
-        addProcessingRecipe(new ItemStack(ModItems.COPPERDUST),  new ItemStack(ModItems.COPPERINGOT), 0.7F);
-        addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPERINGOT), new ItemStack(ModItems.COPPERDUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE), 1F);
+        addProcessingRecipe(new ItemStack(ModItems.COPPER_DUST),  new ItemStack(ModItems.COPPER_INGOT), 0.7F);
+        addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPER_INGOT), new ItemStack(ModItems.COPPER_DUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE), 1F);
     }
     
     public void addProcessingRecipe(ItemStack[] stacksRequired, ItemStack result, float xp) {

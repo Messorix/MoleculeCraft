@@ -13,12 +13,14 @@ public class ModMolecule extends ModMoleculeBase {
 		return this.atomsAndMolecules;
 	}
 
-	public void addMolecule(ModMoleculeBase molecule) {
+	public ModMolecule addMolecule(ModMoleculeBase molecule) {
 		atomsAndMolecules.add(molecule);
+		return this;
 	}
 
-	public void addAtom(ModMoleculeBase atom) {
+	public ModMolecule addAtom(ModMoleculeBase atom) {
 		atomsAndMolecules.add(atom);
+		return this;
 	}
 
 	@Override
@@ -34,8 +36,10 @@ public class ModMolecule extends ModMoleculeBase {
 				} else
 					stringValue += ((ModAtom) m).getSymbol();
 
-			} else {
+			} else if (m != null) {
 				stringValue += "(" + m + ")" + m.getStringAmount();
+			} else {
+				stringValue += "null";
 			}
 		}
 
