@@ -24,14 +24,15 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public class ModTileEntity extends TileEntity implements ISidedInventory, ITickable {
-	public static int fuel_slots = 0;
-	public static int input_slots = 0;
-	public static int output_slots = 0;
-	public static int total_slots = fuel_slots + input_slots + output_slots;
+	
+	public int fuel_slots = 0;
+	public int input_slots = 0;
+	public int output_slots = 0;
+	public int total_slots = fuel_slots + input_slots + output_slots;
 
 	public static final int first_fuel_slot = 0;
-	public static int first_input_slot = first_fuel_slot + fuel_slots;
-	public static int first_output_slot = first_input_slot + input_slots;
+	public int first_input_slot = first_fuel_slot + fuel_slots;
+	public int first_output_slot = first_input_slot + input_slots;
 
 	protected ItemStack[] itemStacks = new ItemStack[total_slots];
 
@@ -197,8 +198,6 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 		} else {
 			itemStacks[firstSuitableOutputSlot].stackSize += result.stackSize;
 		}
-		
-		System.out.println("StackSize" + result.stackSize);
 		
 		markDirty();
 		return true;
@@ -394,10 +393,10 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 		return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
 	}
 
-	protected static byte process_field_id = 0;
-	protected static byte first_burn_time_remaining_field_id = 1;
-	protected static byte first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + fuel_slots);
-	protected static byte number_of_fields = (byte) (first_burn_time_initial_field_id + fuel_slots);
+	protected byte process_field_id = 0;
+	protected byte first_burn_time_remaining_field_id = 1;
+	protected byte first_burn_time_initial_field_id = (byte) (first_burn_time_remaining_field_id + fuel_slots);
+	protected byte number_of_fields = (byte) (first_burn_time_initial_field_id + fuel_slots);
 
 	@Override
 	public int getField(int id) {

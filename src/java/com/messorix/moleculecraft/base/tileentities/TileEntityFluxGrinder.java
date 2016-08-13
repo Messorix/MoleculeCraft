@@ -9,7 +9,7 @@ import net.minecraft.world.EnumSkyBlock;
 
 public class TileEntityFluxGrinder extends ModTileEntity
 {
-	private static boolean setupDone = false;
+	private boolean setupDone = false;
 
 	public TileEntityFluxGrinder()
 	{

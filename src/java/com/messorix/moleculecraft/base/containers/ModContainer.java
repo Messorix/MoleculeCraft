@@ -36,10 +36,10 @@ public abstract class ModContainer extends Container {
 	{
 		this.tileEntity = tileentity;
 
-		first_input_index = first_fuel_index + ModTileEntity.fuel_slots;
-		first_output_index = first_input_index + ModTileEntity.input_slots;
-		first_input_slot = first_fuel_slot + ModTileEntity.fuel_slots;
-		first_output_slot = first_input_slot + ModTileEntity.input_slots;
+		first_input_index = first_fuel_index + tileentity.fuel_slots;
+		first_output_index = first_input_index + tileentity.input_slots;
+		first_input_slot = first_fuel_slot + tileentity.fuel_slots;
+		first_output_slot = first_input_slot + tileentity.input_slots;
 
 		//Hotbar
 		final int slot_x_spacing = 18;
