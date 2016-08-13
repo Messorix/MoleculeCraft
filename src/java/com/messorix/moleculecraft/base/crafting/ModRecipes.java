@@ -43,7 +43,7 @@ public class ModRecipes {
         return null;
     }
 
-    protected boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2)
+    public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2)
     {
         return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == 32767 || parItemStack2.getMetadata() == parItemStack1.getMetadata());
     }

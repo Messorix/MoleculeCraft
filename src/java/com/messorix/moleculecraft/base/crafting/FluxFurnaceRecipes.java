@@ -7,7 +7,9 @@ import java.util.Map.Entry;
 import com.messorix.moleculecraft.base.ModBlocks;
 import com.messorix.moleculecraft.base.ModItems;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 
 public class FluxFurnaceRecipes extends ModRecipes
 {
@@ -23,8 +25,25 @@ public class FluxFurnaceRecipes extends ModRecipes
 
     private FluxFurnaceRecipes()
     {
-        addProcessingRecipe(new ItemStack(ModItems.COPPER_DUST),  new ItemStack(ModItems.COPPER_INGOT), 0.7F);
-        addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPER_INGOT), new ItemStack(ModItems.COPPER_DUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE), 1F);
+    	// Adds vanilla furnace recipes to Flux Furnace Recipes if they don't already exist.
+    	for (Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
+    		if (getProcessingResult(new ItemStack[]{null, entry.getKey()}) == null) {
+    			addProcessingRecipe(entry.getKey(), entry.getValue(), FurnaceRecipes.instance().getSmeltingExperience(entry.getKey()));
+    		}
+    	}
+    	addProcessingRecipe(new ItemStack(ModBlocks.CHALCOCITE_ORE),  new ItemStack(ModItems.COPPER_INGOT), 0.7F);
+    	addProcessingRecipe(new ItemStack(ModBlocks.ACANTHITE_ORE), new ItemStack(ModItems.SILVER_INGOT), 0.9F);
+    	addProcessingRecipe(new ItemStack(ModBlocks.CASSITERITE_ORE), new ItemStack(ModItems.TIN_INGOT), 0.7F);
+
+    	addProcessingRecipe(new ItemStack(ModItems.COPPER_DUST),  new ItemStack(ModItems.COPPER_INGOT), 0.7F);
+    	addProcessingRecipe(new ItemStack(ModItems.SILVER_DUST), new ItemStack(ModItems.SILVER_INGOT), 0.9F);
+    	addProcessingRecipe(new ItemStack(ModItems.TIN_DUST), new ItemStack(ModItems.TIN_INGOT), 0.7F);
+
+    	addProcessingRecipe(new ItemStack(ModItems.IRON_DUST), new ItemStack(Items.IRON_INGOT), 0.7F);
+    	addProcessingRecipe(new ItemStack(ModItems.GOLD_DUST), new ItemStack(Items.GOLD_INGOT), 0.9F);
+
+    	// TODO Add alloys
+    	// addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPER_INGOT), new ItemStack(ModItems.COPPER_DUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE), 1F);
     }
     
     public void addProcessingRecipe(ItemStack[] stacksRequired, ItemStack result, float xp) {
@@ -48,9 +67,15 @@ public class FluxFurnaceRecipes extends ModRecipes
     			{
     				return (ItemStack)entry.getValue();
     			}
-    		} else if (containsNull(stacks) && containsNull(entry.getKey())){
+    		} else if (containsNull(stacks) && containsNull(entry.getKey())) {
     			if (this.areItemStacksEqual(stacks[0], entry.getKey()[0]) || this.areItemStacksEqual(stacks[1], entry.getKey()[1])) {
     				return (ItemStack) entry.getValue();
+    			}
+    		} else {
+    			if (this.areItemStacksEqual(stacks[0], stacks[1])) {
+    				if (containsNull(entry.getKey()) && (areItemStacksEqual(entry.getKey()[0], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[0]))) {
+    					return (ItemStack) entry.getValue();
+    				}
     			}
     		}
     	}
@@ -58,8 +83,17 @@ public class FluxFurnaceRecipes extends ModRecipes
     }
     
     @Override
-    protected boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2) {
+    public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2) {
     	if (parItemStack1 != null && parItemStack2 != null) return super.areItemStacksEqual(parItemStack1, parItemStack2);
+    	return false;
+    }
+    
+    public boolean isSingleInputRecipe(ItemStack[] stacks) {
+    	for (Entry<ItemStack[], ItemStack> entry : this.processingList.entrySet()) {
+    		if (containsNull(entry.getKey()) && (areItemStacksEqual(entry.getKey()[0], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[1]) || areItemStacksEqual(entry.getKey()[0], stacks[1]))) {
+    			return entry.getValue() != null;
+    		}
+    	}
     	return false;
     }
     
