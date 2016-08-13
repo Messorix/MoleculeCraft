@@ -44,7 +44,7 @@ public class ModMolecules {
     		MOLECULES.put("tin", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Sn").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(2)));
     		MOLECULES.put("iron", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Fe").setAmount(1)));
     		MOLECULES.put("gold", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Au").setAmount(1)));
-    		MOLECULES.put("coal", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
+    		MOLECULES.put("carbon", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
     		MOLECULES.put("diamond", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(16)));
     		MOLECULES.put("emerald", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Be").setAmount(3)).addAtom(atoms.getModAtomBySymbol("Al").setAmount(2)).addMolecule(createMolecule(6).addAtom(atoms.getModAtomBySymbol("Si").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(3))));
     		// TODO Add more Molecules
@@ -64,6 +64,25 @@ public class ModMolecules {
     		oreDictionaryNames.add("oreCoal");
     		oreDictionaryNames.add("oreDiamond");
     		oreDictionaryNames.add("oreEmerald");
+    		
+    		oreDictionaryNames.add("ingotCopper");
+    		oreDictionaryNames.add("ingotSilver");
+    		oreDictionaryNames.add("ingotTin");
+    		oreDictionaryNames.add("ingotIron");
+    		oreDictionaryNames.add("ingotGold");
+    		
+    		oreDictionaryNames.add("coal");
+    		
+    		oreDictionaryNames.add("gemDiamond");
+    		oreDictionaryNames.add("gemEmerald");
+    		
+    		oreDictionaryNames.add("dustCopper");
+    		oreDictionaryNames.add("dustSilver");
+    		oreDictionaryNames.add("dustTin");
+    		oreDictionaryNames.add("dustIron");
+    		oreDictionaryNames.add("dustGold");
+    		oreDictionaryNames.add("dustCarbon");
+    		oreDictionaryNames.add("dustDiamond");
     		// TODO Add more names
     		oreDictNamesAdded = true;
     		ModLogger.logInfoMessage("Succesfully added OreDictionay Names to List.");
@@ -74,14 +93,17 @@ public class ModMolecules {
     public static void bindMolecules() {
     	addOreDictNames();
     	final String ore = "ore";
+    	final String gem = "gem";
     	final String dust = "dust";
     	final String ingot = "ingot";
     	names : for (String dictName : oreDictionaryNames) {
     		if (dictName == null || dictName.isEmpty()) continue;
     		ModMolecule molecule = null;
-    		if (dictName.startsWith(ore)) molecule = getMoleculeByMaterial(dictName.substring(3));
-    		if (dictName.startsWith(dust)) molecule = getMoleculeByMaterial(dictName.substring(4));
-    		if (dictName.startsWith(ingot)) molecule = getMoleculeByMaterial(dictName.substring(5));
+    		if (molecule == null && dictName.startsWith("oreCoal")) molecule = getMoleculeByMaterial("carbon");
+    		if (molecule == null && dictName.startsWith(ore)) molecule = getMoleculeByMaterial(dictName.substring(3));
+    		if (molecule == null && dictName.startsWith(gem)) molecule = getMoleculeByMaterial(dictName.substring(3));
+    		if (molecule == null && dictName.startsWith(dust)) molecule = getMoleculeByMaterial(dictName.substring(4));
+    		if (molecule == null && dictName.startsWith(ingot)) molecule = getMoleculeByMaterial(dictName.substring(5));
     		if (molecule == null) molecule = getMoleculeByMaterial(dictName);
     		for (ItemStack stack : OreDictionary.getOres(dictName)) {
     			if (molecule == null) break names;
