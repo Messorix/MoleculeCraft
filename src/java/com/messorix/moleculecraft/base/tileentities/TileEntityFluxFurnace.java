@@ -33,7 +33,9 @@ public class TileEntityFluxFurnace extends ModTileEntity
 	protected boolean processItem(boolean performProcess, ModRecipes recipes) {
 		Integer firstSuitableOutputSlot = null;
 		ItemStack result = null;
-
+		
+		if (getInputSlots()[0] == null && getInputSlots()[1] == null) return false;
+		
 		result = getProcessingResultForItem(getInputSlots());
 
 		if (result != null) {
@@ -66,7 +68,7 @@ public class TileEntityFluxFurnace extends ModTileEntity
 		
 		if (firstSuitableOutputSlot == null) return false;
 		
-		if (itemStacks[firstSuitableOutputSlot] != null && !recipes.areItemStacksEqual(itemStacks[firstSuitableOutputSlot], result)) return false;
+		if (itemStacks[firstSuitableOutputSlot] != null && !FluxFurnaceRecipes.instance().areItemStacksEqual(itemStacks[firstSuitableOutputSlot], result)) return false;
 		
 		if (!performProcess) {
 			return true;
@@ -82,8 +84,12 @@ public class TileEntityFluxFurnace extends ModTileEntity
 			} else return false;
 		} else {
 			if (itemStacks[1] != null && itemStacks[2] != null) {
-				itemStacks[1].stackSize--;
-				itemStacks[2].stackSize--;
+				int[] stacksizes = FluxFurnaceRecipes.instance().getKeyStackSizes(getInputSlots());
+				for(int stacksize : stacksizes) {
+					ModLogger.logInfoMessage("Stacksize: " + stacksize);
+				}
+				itemStacks[1].stackSize -= stacksizes[0];
+				itemStacks[2].stackSize -= stacksizes[1];
 				if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
 				if (itemStacks[2].stackSize <= 0) itemStacks[2] = null;
 			}

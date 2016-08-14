@@ -10,11 +10,11 @@ import net.minecraft.item.ItemStack;
 
 public class ModRecipes {
 	
+	/** The list of processing results. */
     private final Map<ItemStack, ItemStack> processingList = Maps.newHashMap();
     private final Map<ItemStack, Float> experienceList = Maps.newHashMap();
     
     private static final ModRecipes processingBase = new ModRecipes();
-    /** The list of grinding results. */
 
     public static ModRecipes instance()
     {
@@ -44,8 +44,14 @@ public class ModRecipes {
     }
 
     public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2)
-    {
-        return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == 32767 || parItemStack2.getMetadata() == parItemStack1.getMetadata());
+    {	
+    	if (parItemStack1 != null && parItemStack1.getItem() != null && parItemStack2 != null && parItemStack2.getItem() != null)
+    		return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == 32767 || parItemStack2.getMetadata() == parItemStack1.getMetadata());
+    	return false;
+    }
+    
+    public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2, boolean isStrict) {
+    	return areItemStacksEqual(parItemStack1, parItemStack2);
     }
 
     public Map<ItemStack, ItemStack> getProcessingList()
