@@ -1,7 +1,5 @@
 package com.messorix.moleculecraft.base.classes;
 
-import com.anime.basic.logger.ModLogger;
-
 public class ModMoleculeBase {
 
 	private int amount = 0;
@@ -17,7 +15,6 @@ public class ModMoleculeBase {
 
 	public String getStringAmount() {
 		String returnable = String.valueOf(this.amount);
-		ModLogger.logInfoMessage("Amount: " + this.amount);
 		
 	    returnable = returnable.replaceAll("0", "₀");
 	    returnable = returnable.replaceAll("1", "₁");
