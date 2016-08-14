@@ -13,6 +13,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -170,6 +172,15 @@ public class RegistryHelper {
 	public static void registerEntity(IRenderFactory<? super Entity> renderEntity, Class<Entity> entityClass, int id, Object modInstance, int trackingRange, int updateFreq, int hexColorPrimary, int hexColorSecondary) {
 		EntityRegistry.registerModEntity(entityClass, MainModReference.MODID + ":" + entityClass.getName().substring(6), id, modInstance, trackingRange, updateFreq, true, hexColorPrimary, hexColorSecondary);
 		RenderingRegistry.registerEntityRenderingHandler(entityClass, renderEntity);
+	}
+	
+	/**
+	 * Registers the specified fluid and adds a bucket for the fluid.
+	 * @param fluid The fluid that will be registered and that needs the bucket.
+	 */
+	public static void registerFluidAndAddBucket(Fluid fluid) {
+		FluidRegistry.registerFluid(fluid);
+		FluidRegistry.addBucketForFluid(fluid);
 	}
 	
 	/**

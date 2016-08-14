@@ -41,7 +41,7 @@ public class ModAtoms {
 
 		for (ModAtom atom : listOfAtoms) {
 			if (atom.getName().toLowerCase().equals(name.toLowerCase())) {
-				return atom;
+				return atom.copy();
 			}
 		}
 		return null;
@@ -58,7 +58,7 @@ public class ModAtoms {
 
 		for (ModAtom atom : listOfAtoms) {
 			if (atom.getSymbol().toLowerCase().equals(symbol.toLowerCase())) {
-				return atom;
+				return atom.copy();
 			}
 		}
 		return null;

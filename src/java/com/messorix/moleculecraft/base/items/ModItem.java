@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 
 public class ModItem extends Item
 {
-	public static String NAME;
+	public String NAME;
 	public ModMolecule MOLECULE = (ModMolecule) new ModMolecule().setAmount(0);
 	public ModAtoms modAtoms = new ModAtoms();
 	

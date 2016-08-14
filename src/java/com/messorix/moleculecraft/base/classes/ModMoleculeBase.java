@@ -1,5 +1,7 @@
 package com.messorix.moleculecraft.base.classes;
 
+import com.anime.basic.logger.ModLogger;
+
 public class ModMoleculeBase {
 
 	private int amount = 0;
@@ -14,46 +16,19 @@ public class ModMoleculeBase {
 	}
 
 	public String getStringAmount() {
-		String returnable = "";
+		String returnable = String.valueOf(this.amount);
+		ModLogger.logInfoMessage("Amount: " + this.amount);
 		
-		for (char c : String.valueOf(this.amount).toCharArray())
-		{
-			switch(c)
-			{
-				case '0': 
-					returnable += "₀";
-					break;
-				case '1':
-					returnable += "₁";
-					break;
-				case '2':
-					returnable += "₂";
-					break;
-				case '3':
-					returnable += "₃";
-					break;
-				case '4':
-					returnable += "₄";
-					break;
-				case '5':
-					returnable += "₅";
-					break;
-				case '6':
-					returnable += "₆";
-					break;
-				case '7':
-					returnable += "₇";
-					break;
-				case '8':
-					returnable += "₈";
-					break;
-				case '9':
-					returnable += "₉";
-					break;
-				default:
-					break;
-			}
-		}
+	    returnable = returnable.replaceAll("0", "₀");
+	    returnable = returnable.replaceAll("1", "₁");
+	    returnable = returnable.replaceAll("2", "₂");
+	    returnable = returnable.replaceAll("3", "₃");
+	    returnable = returnable.replaceAll("4", "₄");
+	    returnable = returnable.replaceAll("5", "₅");
+	    returnable = returnable.replaceAll("6", "₆");
+	    returnable = returnable.replaceAll("7", "₇");
+	    returnable = returnable.replaceAll("8", "₈");
+	    returnable = returnable.replaceAll("9", "₉");
 		
 		return returnable;
 	}

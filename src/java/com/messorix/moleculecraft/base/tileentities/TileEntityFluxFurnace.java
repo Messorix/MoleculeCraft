@@ -11,7 +11,7 @@ import net.minecraft.world.EnumSkyBlock;
 
 public class TileEntityFluxFurnace extends ModTileEntity
 {
-	private static boolean setupDone = false;
+	private boolean setupDone = false;
 	
 	public TileEntityFluxFurnace()
 	{
@@ -38,16 +38,21 @@ public class TileEntityFluxFurnace extends ModTileEntity
 
 		if (result != null) {
 			for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-				ModLogger.logInfoMessage("Process Item: " + output_slots);
+				if (first_output_slot <= 2) {
+					setup();
+					if (first_input_slot <= 2) {
+						ModLogger.logErrorMessage("Setup not setting first output slot correctly.");
+						return false;
+					}
+				}
 				ItemStack outputStack = itemStacks[outputSlot];
-
+				
 				if (outputStack == null) {
 					firstSuitableOutputSlot = outputSlot;
 					break;
 				}
 
-				if (outputStack.getItem() == result.getItem() && (!outputStack.getHasSubtypes()
-						|| outputStack.getMetadata() == result.getMetadata())) {
+				if (outputStack.getItem() == result.getItem() && (!outputStack.getHasSubtypes() || outputStack.getMetadata() == result.getMetadata())) {
 					int combinedSize = itemStacks[outputSlot].stackSize + result.stackSize;
 
 					if (combinedSize <= getInventoryStackLimit()
@@ -58,16 +63,30 @@ public class TileEntityFluxFurnace extends ModTileEntity
 				}
 			}
 		} else return false;
+		
+		if (firstSuitableOutputSlot == null) return false;
+		
+		if (itemStacks[firstSuitableOutputSlot] != null && !recipes.areItemStacksEqual(itemStacks[firstSuitableOutputSlot], result)) return false;
+		
 		if (!performProcess) {
 			return true;
 		}
-		if (itemStacks != null) {
-			itemStacks[1].stackSize--;
-			if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
-		}
-		if (itemStacks[2] != null) {
-			itemStacks[2].stackSize--;
-			if (itemStacks[2].stackSize <= 0) itemStacks[2] = null;
+		
+		if (FluxFurnaceRecipes.instance().isSingleInputRecipe(getInputSlots())) {
+			if (itemStacks[1] != null) {
+				itemStacks[1].stackSize--;
+				if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
+			} else if (itemStacks[2] != null){
+				itemStacks[2].stackSize--;
+				if (itemStacks[2].stackSize <= 0) itemStacks[2] = null;
+			} else return false;
+		} else {
+			if (itemStacks[1] != null && itemStacks[2] != null) {
+				itemStacks[1].stackSize--;
+				itemStacks[2].stackSize--;
+				if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
+				if (itemStacks[2].stackSize <= 0) itemStacks[2] = null;
+			}
 		}
 		
 		if (itemStacks[firstSuitableOutputSlot] == null) {
@@ -75,8 +94,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 		} else {
 			itemStacks[firstSuitableOutputSlot].stackSize += result.stackSize;
 		}
-
-		System.out.println("StackSize" + result.stackSize);
 
 		markDirty();
 
@@ -168,13 +185,14 @@ public class TileEntityFluxFurnace extends ModTileEntity
 	{
 		if (!setupDone)
 		{
+			ModLogger.logInfoMessage("Running Flux Furnace Setup.");
 			fuel_slots = 1;
 			input_slots = 2;
 			output_slots = 1;
 			
 			total_slots = fuel_slots + input_slots + output_slots;
-			first_input_slot = first_fuel_slot + fuel_slots;
-			first_output_slot = first_input_slot + input_slots;
+			first_input_slot = first_fuel_slot + 1;
+			first_output_slot = first_input_slot + 2;
 			itemStacks = new ItemStack[total_slots];
 			burnTimeInitial = new int[fuel_slots];
 			burnTimeRemaining = new int[fuel_slots];

@@ -105,6 +105,21 @@ public class ModAtom extends ModMoleculeBase {
 		SYMBOL = string;
 		return this;
 	}
-
+	
+	/**
+	 * Use this if you need to change the amount otherwise it will change for ALL objects using that instance.
+	 * @return A new instance of this Atom, with all the same info.
+	 */
+	public ModAtom copy() {
+		ModAtom copy = new ModAtom();
+		copy.ATOMICMASS = ATOMICMASS;
+		copy.ATOMNUMBER = ATOMNUMBER;
+		copy.BOILINGPOINT = BOILINGPOINT;
+		copy.MELTINGPOINT = MELTINGPOINT;
+		copy.NAME = NAME;
+		copy.RADIOACTIVE = RADIOACTIVE;
+		copy.SYMBOL = SYMBOL;
+		return copy;
+	}
 
 }

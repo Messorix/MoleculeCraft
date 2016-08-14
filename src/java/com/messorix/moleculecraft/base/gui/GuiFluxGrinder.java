@@ -1,10 +1,10 @@
 package com.messorix.moleculecraft.base.gui;
 
 import java.awt.Color;
-import com.anime.basic.MainModReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anime.basic.MainModReference;
 import com.messorix.moleculecraft.base.containers.ContainerFluxGrinder;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiFluxGrinder  extends GuiContainer
 {
     private static final ResourceLocation texture = new ResourceLocation(MainModReference.MODID + ":textures/gui/flux_grinder_gui.png");
-    private final TileEntityFluxGrinder entity;
+    private final TileEntityFluxGrinder tileentity;
 
     public GuiFluxGrinder(InventoryPlayer player, TileEntityFluxGrinder entity)
     {
@@ -29,7 +29,7 @@ public class GuiFluxGrinder  extends GuiContainer
         xSize = 176;
         ySize = 166;
         
-        this.entity = entity;
+        this.tileentity = entity;
     }
 
     final int process_bar_xpos = 79;
@@ -57,7 +57,7 @@ public class GuiFluxGrinder  extends GuiContainer
     	GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     	this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, xSize, ySize);
     	
-    	double processProgress = entity.fractionOfProcessingTimeComplete();
+    	double processProgress = tileentity.fractionOfProcessingTimeComplete();
     	this.drawTexturedModalRect(this.guiLeft + process_bar_xpos, 
     			this.guiTop + process_bar_ypos, 
     			process_bar_icon_u, 
@@ -65,9 +65,9 @@ public class GuiFluxGrinder  extends GuiContainer
     			(int)(processProgress * process_bar_width), 
     			 process_bar_height);
     	
-    	for ( int i = 0; i < TileEntityFluxGrinder.fuel_slots; i++)
+    	for ( int i = 0; i < tileentity.fuel_slots; i++)
     	{
-    		double burnRemaining = entity.fractionOfFuelRemaining(i);
+    		double burnRemaining = tileentity.fractionOfFuelRemaining(i);
     		int yOffset = (int)((1.0 - burnRemaining) * flame_height);
     		
     		this.drawTexturedModalRect(guiLeft + flame_xpos + flame_x_spacing * i, 
@@ -87,7 +87,7 @@ public class GuiFluxGrinder  extends GuiContainer
     	final int label_xpos = 5;
     	final int label_ypos = 5;
     	
-    	fontRendererObj.drawString(entity.getDisplayName().getUnformattedText(), label_xpos, label_ypos, Color.DARK_GRAY.getRGB());
+    	fontRendererObj.drawString(tileentity.getDisplayName().getUnformattedText(), label_xpos, label_ypos, Color.DARK_GRAY.getRGB());
     	
     	List<String> text = new ArrayList<String>();
     	
@@ -95,17 +95,17 @@ public class GuiFluxGrinder  extends GuiContainer
     	{
     		text.add("Progress:");
     		
-    		int processPercentage = (int)(entity.fractionOfProcessingTimeComplete() * 100);
+    		int processPercentage = (int)(tileentity.fractionOfProcessingTimeComplete() * 100);
     		
     		text.add(processPercentage + "%");
     	}
     	
-    	for(int i = 0; i < TileEntityFluxGrinder.fuel_slots; i++)
+    	for(int i = 0; i < tileentity.fuel_slots; i++)
     	{
         	if (isInRect(guiLeft + flame_xpos + flame_x_spacing * i, guiTop + flame_ypos, flame_width, flame_height, mouseX, mouseY))
         	{
         		text.add("Fuel Time: ");
-        		text.add(entity.secondsOfFuelRemaining(i) + "s");
+        		text.add(tileentity.secondsOfFuelRemaining(i) + "s");
         	}
     	}
     	
