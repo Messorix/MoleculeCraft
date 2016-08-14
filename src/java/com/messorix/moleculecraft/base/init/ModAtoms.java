@@ -1,4 +1,4 @@
-package com.messorix.moleculecraft.base;
+package com.messorix.moleculecraft.base.init;
 
 import java.io.IOException;
 import java.io.InputStream;

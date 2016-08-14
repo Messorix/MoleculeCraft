@@ -1,6 +1,6 @@
 package com.messorix.moleculecraft.base.creativetabs;
 
-import com.messorix.moleculecraft.base.ModItems;
+import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

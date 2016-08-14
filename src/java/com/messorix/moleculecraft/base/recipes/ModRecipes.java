@@ -1,4 +1,4 @@
-package com.messorix.moleculecraft.base.crafting;
+package com.messorix.moleculecraft.base.recipes;
 
 import java.util.Iterator;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.messorix.moleculecraft.base;
+package com.messorix.moleculecraft.base.init;
 
 import com.anime.basic.registry.RegistryHelper;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;

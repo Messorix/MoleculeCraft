@@ -1,11 +1,11 @@
-package com.messorix.moleculecraft.base.crafting;
+package com.messorix.moleculecraft.base.recipes;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.messorix.moleculecraft.base.ModBlocks;
-import com.messorix.moleculecraft.base.ModItems;
+import com.messorix.moleculecraft.base.init.ModBlocks;
+import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

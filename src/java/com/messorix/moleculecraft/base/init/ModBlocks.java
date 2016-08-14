@@ -1,4 +1,4 @@
-package com.messorix.moleculecraft.base;
+package com.messorix.moleculecraft.base.init;
 
 import java.util.ArrayList;
 import java.util.List;

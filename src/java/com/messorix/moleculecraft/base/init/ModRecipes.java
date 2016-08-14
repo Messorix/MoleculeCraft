@@ -1,4 +1,4 @@
-package com.messorix.moleculecraft.base;
+package com.messorix.moleculecraft.base.init;
 import com.anime.basic.recipies.RecipeHelper;
 
 public class ModRecipes 
