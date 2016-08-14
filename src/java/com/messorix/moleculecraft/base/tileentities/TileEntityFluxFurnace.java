@@ -1,10 +1,9 @@
 package com.messorix.moleculecraft.base.tileentities;
 
-import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.blocks.BlockFluxFurnace;
 import com.messorix.moleculecraft.base.blocks.BlockMachine;
-import com.messorix.moleculecraft.base.crafting.FluxFurnaceRecipes;
-import com.messorix.moleculecraft.base.crafting.ModRecipes;
+import com.messorix.moleculecraft.base.recipes.FluxFurnaceRecipes;
+import com.messorix.moleculecraft.base.recipes.ModRecipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumSkyBlock;
@@ -40,13 +39,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 
 		if (result != null) {
 			for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-				if (first_output_slot <= 2) {
-					setup();
-					if (first_input_slot <= 2) {
-						ModLogger.logErrorMessage("Setup not setting first output slot correctly.");
-						return false;
-					}
-				}
 				ItemStack outputStack = itemStacks[outputSlot];
 				
 				if (outputStack == null) {
@@ -85,9 +77,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 		} else {
 			if (itemStacks[1] != null && itemStacks[2] != null) {
 				int[] stacksizes = FluxFurnaceRecipes.instance().getKeyStackSizes(getInputSlots());
-				for(int stacksize : stacksizes) {
-					ModLogger.logInfoMessage("Stacksize: " + stacksize);
-				}
 				itemStacks[1].stackSize -= stacksizes[0];
 				itemStacks[2].stackSize -= stacksizes[1];
 				if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
@@ -191,7 +180,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 	{
 		if (!setupDone)
 		{
-			ModLogger.logInfoMessage("Running Flux Furnace Setup.");
 			fuel_slots = 1;
 			input_slots = 2;
 			output_slots = 1;

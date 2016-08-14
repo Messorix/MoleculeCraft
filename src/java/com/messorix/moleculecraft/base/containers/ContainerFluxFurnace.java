@@ -1,7 +1,6 @@
 package com.messorix.moleculecraft.base.containers;
 
-import com.anime.basic.logger.ModLogger;
-import com.messorix.moleculecraft.base.crafting.FluxFurnaceRecipes;
+import com.messorix.moleculecraft.base.recipes.FluxFurnaceRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,8 +32,6 @@ public class ContainerFluxFurnace extends ModContainer
 		tileEntityFluxFurnace = tileentity;
 
 		final int slot_x_spacing = 18;
-		
-		ModLogger.logInfoMessage("Slots: " + fuel_slots + " " + input_slots + " " + output_slots);
 		
 		//Fuel slots
 		final int fuel_slots_xpos = 56;

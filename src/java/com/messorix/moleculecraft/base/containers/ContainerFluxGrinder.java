@@ -1,6 +1,6 @@
 package com.messorix.moleculecraft.base.containers;
 
-import com.messorix.moleculecraft.base.crafting.FluxGrinderRecipes;
+import com.messorix.moleculecraft.base.recipes.FluxGrinderRecipes;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxGrinder;
 
 import net.minecraft.entity.player.EntityPlayer;
