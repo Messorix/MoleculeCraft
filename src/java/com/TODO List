@@ -1,0 +1,6 @@
+TODO List
+1. Finish GUI rendering "API".
+2. Create and finish Block "API".
+3. Make more Sprites for the Sprite Sheet.
+4. Add on to TE "API" to generate from things other than Items.
+5. Go through FuelRecipesBase and check for "simplifications" and optimizations.
