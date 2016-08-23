@@ -1,11 +1,11 @@
-package com.messorix.moleculecraft.base.crafting;
+package com.messorix.moleculecraft.base.recipes;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.messorix.moleculecraft.base.ModBlocks;
-import com.messorix.moleculecraft.base.ModItems;
+import com.messorix.moleculecraft.base.init.ModBlocks;
+import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -43,7 +43,7 @@ public class FluxFurnaceRecipes extends ModRecipes
     	addProcessingRecipe(new ItemStack(ModItems.GOLD_DUST), new ItemStack(Items.GOLD_INGOT), 0.9F);
 
     	// TODO Add alloys
-    	// addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPER_INGOT), new ItemStack(ModItems.COPPER_DUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE), 1F);
+    	 addProcessingRecipe(new ItemStack[]{new ItemStack(ModItems.COPPER_INGOT, 3), new ItemStack(ModItems.COPPER_DUST)}, new ItemStack(ModBlocks.CHALCOCITE_ORE, 2), 1F);
     }
     
     public void addProcessingRecipe(ItemStack[] stacksRequired, ItemStack result, float xp) {
@@ -59,11 +59,10 @@ public class FluxFurnaceRecipes extends ModRecipes
     }
     
     public ItemStack getProcessingResult(ItemStack[] stacks) {
-    	
     	for (Entry<ItemStack[], ItemStack> entry : this.processingList.entrySet())
     	{
     		if (!containsNull(entry.getKey()) && !containsNull(stacks)) {
-    			if (this.areItemStacksEqual(stacks[0], entry.getKey()[0]) && this.areItemStacksEqual(stacks[1], entry.getKey()[1]))
+    			if (this.areItemStacksEqual(stacks[0], entry.getKey()[0], true) && this.areItemStacksEqual(stacks[1], entry.getKey()[1], true))
     			{
     				return (ItemStack)entry.getValue();
     			}
@@ -82,16 +81,45 @@ public class FluxFurnaceRecipes extends ModRecipes
 		return null;
     }
     
+    public int[] getKeyStackSizes(ItemStack[] stacks) {
+    	int[] stacksizes = new int[stacks.length];
+    	for (int i = 0; i < stacks.length; i++) {
+    		stacksizes[i] = 0;
+    	}
+    	for (Entry<ItemStack[], ItemStack> entry : this.processingList.entrySet())
+    	{
+    		if (!containsNull(entry.getKey()) && !containsNull(stacks)) {
+    			if (this.areItemStacksEqual(stacks[0], entry.getKey()[0], true) && this.areItemStacksEqual(stacks[1], entry.getKey()[1], true))
+    			{
+    				for (int i = 0; i < entry.getKey().length; i++) {
+    					stacksizes[i] = entry.getKey()[i].stackSize;
+    				}
+    				return stacksizes;
+    			}
+    		}
+    	}
+		return stacksizes;
+    }
+    
     @Override
     public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2) {
     	if (parItemStack1 != null && parItemStack2 != null) return super.areItemStacksEqual(parItemStack1, parItemStack2);
     	return false;
     }
     
+    @Override
+    public boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2, boolean isStrict) {
+    	if (parItemStack1 != null && parItemStack2 != null && !isStrict) return (super.areItemStacksEqual(parItemStack1, parItemStack2, false));
+    	if (parItemStack1 != null && parItemStack2 != null && isStrict) return (super.areItemStacksEqual(parItemStack1, parItemStack2, false) && parItemStack1.stackSize >= parItemStack2.stackSize);
+    	return false;
+    }
+    
     public boolean isSingleInputRecipe(ItemStack[] stacks) {
     	for (Entry<ItemStack[], ItemStack> entry : this.processingList.entrySet()) {
-    		if (containsNull(entry.getKey()) && (areItemStacksEqual(entry.getKey()[0], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[1]) || areItemStacksEqual(entry.getKey()[0], stacks[1]))) {
-    			return entry.getValue() != null;
+    		if (getKeyStackSizes(stacks)[0] == 0 && getKeyStackSizes(stacks)[1] == 0) {
+    			if (containsNull(entry.getKey()) && (areItemStacksEqual(entry.getKey()[0], stacks[0], false) || areItemStacksEqual(entry.getKey()[1], stacks[0]) || areItemStacksEqual(entry.getKey()[1], stacks[1]) || areItemStacksEqual(entry.getKey()[0], stacks[1]))) {
+    				return entry.getValue() != null;
+    			}
     		}
     	}
     	return false;

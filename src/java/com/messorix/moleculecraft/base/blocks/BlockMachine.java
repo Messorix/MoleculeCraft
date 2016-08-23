@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.messorix.moleculecraft.base.ModBlocks;
+import com.messorix.moleculecraft.base.init.ModBlocks;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;

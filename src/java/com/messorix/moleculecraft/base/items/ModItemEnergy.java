@@ -7,11 +7,11 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class ModItemEnergy extends ItemEnergyContainer
 {
-	public static String NAME;
+	public String name;
 	
     public ModItemEnergy(String unlocalizedName, String registryName)
     {
-    	NAME = unlocalizedName;
+    	name = unlocalizedName;
         this.setUnlocalizedName(unlocalizedName);
     }
     

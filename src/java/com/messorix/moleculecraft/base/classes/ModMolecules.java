@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.anime.basic.logger.ModLogger;
-import com.messorix.moleculecraft.base.ModAtoms;
+import com.messorix.moleculecraft.base.init.ModAtoms;
+import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -47,6 +48,13 @@ public class ModMolecules {
     		MOLECULES.put("carbon", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
     		MOLECULES.put("diamond", createMolecule(1).addAtom(atoms.getModAtomBySymbol("C").setAmount(16)));
     		MOLECULES.put("emerald", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Be").setAmount(3)).addAtom(atoms.getModAtomBySymbol("Al").setAmount(2)).addMolecule(createMolecule(6).addAtom(atoms.getModAtomBySymbol("Si").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(3))));
+    		
+    		MOLECULES.put("lithiumcarbonoxide", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(2)));
+    		MOLECULES.put("lithiummagneseoxide", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Mn").setAmount(2)).addAtom(atoms.getModAtomBySymbol("O").setAmount(4)));
+    		MOLECULES.put("lithiumironphosphateoxide", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Fe").setAmount(1)).addAtom(atoms.getModAtomBySymbol("P").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(4)));
+    		MOLECULES.put("lithiumpolonium", createMolecule(1).addMolecule(createMolecule(8).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Po").setAmount(1))));
+    		
+    		MOLECULES.put("graphite", createMolecule(5).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
     		// TODO Add more Molecules
     		moleculesCreated = true;
     		ModLogger.logInfoMessage("Succesfully created Molecules.");
@@ -97,19 +105,36 @@ public class ModMolecules {
     	final String dust = "dust";
     	final String ingot = "ingot";
     	names : for (String dictName : oreDictionaryNames) {
+    		ModLogger.logInfoMessage("Name: " + dictName);
     		if (dictName == null || dictName.isEmpty()) continue;
     		ModMolecule molecule = null;
-    		if (molecule == null && dictName.startsWith("oreCoal")) molecule = getMoleculeByMaterial("carbon");
-    		if (molecule == null && dictName.startsWith(ore)) molecule = getMoleculeByMaterial(dictName.substring(3));
-    		if (molecule == null && dictName.startsWith(gem)) molecule = getMoleculeByMaterial(dictName.substring(3));
-    		if (molecule == null && dictName.startsWith(dust)) molecule = getMoleculeByMaterial(dictName.substring(4));
+    		if (molecule == null && dictName.startsWith("oreCoal") || dictName.startsWith("coal")) molecule = getMoleculeByMaterial("carbon");
+    		if (molecule == null && dictName.startsWith(ore)) {
+    			molecule = getMoleculeByMaterial(dictName.substring(3));
+    			ModLogger.logInfoMessage("Binding: " + dictName);
+    		}
+    		if (molecule == null && dictName.startsWith(gem)) {
+    			molecule = getMoleculeByMaterial(dictName.substring(3));
+    			ModLogger.logInfoMessage("Binding: " + dictName);
+    		}
+    		if (molecule == null && dictName.startsWith(dust)) {
+    			molecule = getMoleculeByMaterial(dictName.substring(4));
+    			ModLogger.logInfoMessage("Binding: " + dictName);
+    		}
     		if (molecule == null && dictName.startsWith(ingot)) molecule = getMoleculeByMaterial(dictName.substring(5));
     		if (molecule == null) molecule = getMoleculeByMaterial(dictName);
     		for (ItemStack stack : OreDictionary.getOres(dictName)) {
-    			if (molecule == null) break names;
+    			if (molecule == null) continue names;
     			if (stack != null) objectMolecules.put(stack, molecule);
     		}
     	}
+    	
+    	objectMolecules.put(new ItemStack(ModItems.LCO_ELECTRODE), getMoleculeByMaterial("lithiumcarbonoxide"));
+    	objectMolecules.put(new ItemStack(ModItems.LMO_ELECTRODE), getMoleculeByMaterial("lithiummagneseoxide"));
+    	objectMolecules.put(new ItemStack(ModItems.LFP_ELECTRODE), getMoleculeByMaterial("lithiumironphosphateoxide"));
+    	objectMolecules.put(new ItemStack(ModItems.LIPO_CASING), getMoleculeByMaterial("lithiumpolonium"));
+    	
+    	objectMolecules.put(new ItemStack(ModItems.GRAPHITE), getMoleculeByMaterial("graphite"));
     	ModLogger.logInfoMessage("Succesfully bound molecules to ItemStacks.");
     }
     
@@ -120,7 +145,6 @@ public class ModMolecules {
     public static ModMolecule getMoleculeByMaterial(String material) {
     	if (!moleculesCreated) createMolecules();
     	material = material.toLowerCase();
-    	ModLogger.logInfoMessage("Material: " + material + ".");
     	if (MOLECULES.containsKey(material)) return MOLECULES.get(material);
     	return null;
     }

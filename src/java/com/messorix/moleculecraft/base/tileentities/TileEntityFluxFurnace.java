@@ -1,10 +1,9 @@
 package com.messorix.moleculecraft.base.tileentities;
 
-import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.blocks.BlockFluxFurnace;
 import com.messorix.moleculecraft.base.blocks.BlockMachine;
-import com.messorix.moleculecraft.base.crafting.FluxFurnaceRecipes;
-import com.messorix.moleculecraft.base.crafting.ModRecipes;
+import com.messorix.moleculecraft.base.recipes.FluxFurnaceRecipes;
+import com.messorix.moleculecraft.base.recipes.ModRecipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumSkyBlock;
@@ -33,18 +32,13 @@ public class TileEntityFluxFurnace extends ModTileEntity
 	protected boolean processItem(boolean performProcess, ModRecipes recipes) {
 		Integer firstSuitableOutputSlot = null;
 		ItemStack result = null;
-
+		
+		if (getInputSlots()[0] == null && getInputSlots()[1] == null) return false;
+		
 		result = getProcessingResultForItem(getInputSlots());
 
 		if (result != null) {
 			for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-				if (first_output_slot <= 2) {
-					setup();
-					if (first_input_slot <= 2) {
-						ModLogger.logErrorMessage("Setup not setting first output slot correctly.");
-						return false;
-					}
-				}
 				ItemStack outputStack = itemStacks[outputSlot];
 				
 				if (outputStack == null) {
@@ -66,7 +60,7 @@ public class TileEntityFluxFurnace extends ModTileEntity
 		
 		if (firstSuitableOutputSlot == null) return false;
 		
-		if (itemStacks[firstSuitableOutputSlot] != null && !recipes.areItemStacksEqual(itemStacks[firstSuitableOutputSlot], result)) return false;
+		if (itemStacks[firstSuitableOutputSlot] != null && !FluxFurnaceRecipes.instance().areItemStacksEqual(itemStacks[firstSuitableOutputSlot], result)) return false;
 		
 		if (!performProcess) {
 			return true;
@@ -82,8 +76,9 @@ public class TileEntityFluxFurnace extends ModTileEntity
 			} else return false;
 		} else {
 			if (itemStacks[1] != null && itemStacks[2] != null) {
-				itemStacks[1].stackSize--;
-				itemStacks[2].stackSize--;
+				int[] stacksizes = FluxFurnaceRecipes.instance().getKeyStackSizes(getInputSlots());
+				itemStacks[1].stackSize -= stacksizes[0];
+				itemStacks[2].stackSize -= stacksizes[1];
 				if (itemStacks[1].stackSize <= 0) itemStacks[1] = null;
 				if (itemStacks[2].stackSize <= 0) itemStacks[2] = null;
 			}
@@ -185,7 +180,6 @@ public class TileEntityFluxFurnace extends ModTileEntity
 	{
 		if (!setupDone)
 		{
-			ModLogger.logInfoMessage("Running Flux Furnace Setup.");
 			fuel_slots = 1;
 			input_slots = 2;
 			output_slots = 1;

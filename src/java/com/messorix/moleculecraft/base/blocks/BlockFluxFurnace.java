@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.anime.basic.MainModReference;
 import com.anime.basic.network.GuiHandler;
-import com.messorix.moleculecraft.base.ModBlocks;
+import com.messorix.moleculecraft.base.init.ModBlocks;
 import com.messorix.moleculecraft.base.tileentities.TileEntityFluxFurnace;
 
 import net.minecraft.block.material.Material;

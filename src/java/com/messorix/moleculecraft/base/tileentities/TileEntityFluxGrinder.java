@@ -2,7 +2,7 @@ package com.messorix.moleculecraft.base.tileentities;
 
 import com.messorix.moleculecraft.base.blocks.BlockFluxGrinder;
 import com.messorix.moleculecraft.base.blocks.BlockMachine;
-import com.messorix.moleculecraft.base.crafting.FluxGrinderRecipes;
+import com.messorix.moleculecraft.base.recipes.FluxGrinderRecipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumSkyBlock;

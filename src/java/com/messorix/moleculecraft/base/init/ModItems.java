@@ -1,16 +1,13 @@
-package com.messorix.moleculecraft.base;
+package com.messorix.moleculecraft.base.init;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.anime.basic.registry.RegistryHelper;
 import com.messorix.moleculecraft.base.items.ItemDusts;
+import com.messorix.moleculecraft.base.items.ItemElectrodes;
 import com.messorix.moleculecraft.base.items.ItemGraphite;
 import com.messorix.moleculecraft.base.items.ItemIngots;
-import com.messorix.moleculecraft.base.items.ItemLCOElectrode;
-import com.messorix.moleculecraft.base.items.ItemLFPElectrode;
-import com.messorix.moleculecraft.base.items.ItemLMOElectrode;
-import com.messorix.moleculecraft.base.items.ItemLiPoCasing;
 import com.messorix.moleculecraft.base.items.ItemLithiumIonBattery;
 import com.messorix.moleculecraft.base.items.ModItem;
 import com.messorix.moleculecraft.base.items.ModItemEnergy;
@@ -42,40 +39,40 @@ public class ModItems
 	
 	public void registerItems()
     {
-		RegistryHelper.registerItem(COPPER_INGOT = new ItemIngots("copper", "copper"), COPPER_INGOT.NAME);
+		RegistryHelper.registerItem(COPPER_INGOT = new ItemIngots("copper", "copper"), COPPER_INGOT.name);
 		itemlist.add(COPPER_INGOT);
-		RegistryHelper.registerItem(SILVER_INGOT = new ItemIngots("silver", "silver"), SILVER_INGOT.NAME);
+		RegistryHelper.registerItem(SILVER_INGOT = new ItemIngots("silver", "silver"), SILVER_INGOT.name);
 		itemlist.add(SILVER_INGOT);
-		RegistryHelper.registerItem(TIN_INGOT = new ItemIngots("tin", "tin"), TIN_INGOT.NAME);
+		RegistryHelper.registerItem(TIN_INGOT = new ItemIngots("tin", "tin"), TIN_INGOT.name);
 		itemlist.add(TIN_INGOT);
 		
-		RegistryHelper.registerItem(COPPER_DUST = new ItemDusts("copper", "copper"), COPPER_DUST.NAME);
+		RegistryHelper.registerItem(COPPER_DUST = new ItemDusts("copper", "copper"), COPPER_DUST.name);
 		itemlist.add(COPPER_DUST);
-		RegistryHelper.registerItem(SILVER_DUST = new ItemDusts("silver", "silver"), SILVER_DUST.NAME);
+		RegistryHelper.registerItem(SILVER_DUST = new ItemDusts("silver", "silver"), SILVER_DUST.name);
 		itemlist.add(SILVER_DUST);
-		RegistryHelper.registerItem(TIN_DUST = new ItemDusts("tin", "tin"), TIN_DUST.NAME);
+		RegistryHelper.registerItem(TIN_DUST = new ItemDusts("tin", "tin"), TIN_DUST.name);
 		itemlist.add(TIN_DUST);
-		RegistryHelper.registerItem(IRON_DUST = new ItemDusts("iron", "iron"), IRON_DUST.NAME);
+		RegistryHelper.registerItem(IRON_DUST = new ItemDusts("iron", "iron"), IRON_DUST.name);
 		itemlist.add(IRON_DUST);
-		RegistryHelper.registerItem(GOLD_DUST = new ItemDusts("gold", "gold"), GOLD_DUST.NAME);
+		RegistryHelper.registerItem(GOLD_DUST = new ItemDusts("gold", "gold"), GOLD_DUST.name);
 		itemlist.add(GOLD_DUST);
-		RegistryHelper.registerItem(CARBON_DUST = new ItemDusts("carbon", "carbon"), CARBON_DUST.NAME);
+		RegistryHelper.registerItem(CARBON_DUST = new ItemDusts("carbon", "carbon"), CARBON_DUST.name);
 		itemlist.add(CARBON_DUST);
-		RegistryHelper.registerItem(DIAMOND_DUST = new ItemDusts("diamond", "diamond"), DIAMOND_DUST.NAME);
+		RegistryHelper.registerItem(DIAMOND_DUST = new ItemDusts("diamond", "diamond"), DIAMOND_DUST.name);
 		itemlist.add(DIAMOND_DUST);
 		
-		RegistryHelper.registerItem(LITHIUM_ION_BATTERY = new ItemLithiumIonBattery(), ItemLithiumIonBattery.NAME);
+		RegistryHelper.registerItem(LITHIUM_ION_BATTERY = new ItemLithiumIonBattery(), LITHIUM_ION_BATTERY.name);
 		itemEnergylist.add(LITHIUM_ION_BATTERY);
 
-		RegistryHelper.registerItem(LCO_ELECTRODE = new ItemLCOElectrode(), LCO_ELECTRODE.NAME);
+		RegistryHelper.registerItem(LCO_ELECTRODE = new ItemElectrodes("lco_electrode", "lco_electrode"), LCO_ELECTRODE.name);
 		itemlist.add(LCO_ELECTRODE);
-		RegistryHelper.registerItem(LMO_ELECTRODE = new ItemLMOElectrode(), LMO_ELECTRODE.NAME);
+		RegistryHelper.registerItem(LMO_ELECTRODE = new ItemElectrodes("lmo_electrode", "lmo_electrode"), LMO_ELECTRODE.name);
 		itemlist.add(LMO_ELECTRODE);
-		RegistryHelper.registerItem(LFP_ELECTRODE = new ItemLFPElectrode(), LFP_ELECTRODE.NAME);
+		RegistryHelper.registerItem(LFP_ELECTRODE = new ItemElectrodes("lfp_electrode", "lfp_electrode"), LFP_ELECTRODE.name);
 		itemlist.add(LFP_ELECTRODE);
-		RegistryHelper.registerItem(GRAPHITE = new ItemGraphite(), GRAPHITE.NAME);
+		RegistryHelper.registerItem(GRAPHITE = new ItemGraphite(), GRAPHITE.name);
 		itemlist.add(GRAPHITE);
-		RegistryHelper.registerItem(LIPO_CASING = new ItemLiPoCasing(), LIPO_CASING.NAME);
+		RegistryHelper.registerItem(LIPO_CASING = new ModItem("lipo_casing", "lipo_casing"), LIPO_CASING.name);
 		itemlist.add(LIPO_CASING);
 
     }

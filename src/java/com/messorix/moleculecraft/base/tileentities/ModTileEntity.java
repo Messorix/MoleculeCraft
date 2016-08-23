@@ -3,8 +3,7 @@ package com.messorix.moleculecraft.base.tileentities;
 import java.util.Arrays;
 
 import com.anime.basic.NBT.NBTUtils;
-import com.anime.basic.logger.ModLogger;
-import com.messorix.moleculecraft.base.crafting.ModRecipes;
+import com.messorix.moleculecraft.base.recipes.ModRecipes;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -150,7 +149,6 @@ public class ModTileEntity extends TileEntity implements ISidedInventory, ITicka
 
 				if (result != null) {
 					for (int outputSlot = first_output_slot; outputSlot < first_output_slot + output_slots; outputSlot++) {
-						ModLogger.logInfoMessage("Process Item: " + output_slots);
 						ItemStack outputStack = itemStacks[outputSlot];
 
 						if (outputStack == null) {
