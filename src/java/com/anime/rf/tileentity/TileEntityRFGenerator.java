@@ -14,7 +14,7 @@ public class TileEntityRFGenerator extends TileEntityRFGeneratorBase {
 	protected boolean setup() {
 		if (!hasBeenSetup) {
 			recipes = FuelRecipesBase.instance();
-			FUEL_SLOTS = 1;
+			FUEL_SLOTS = 3;
 			OUTPUT_SLOTS = 0;
 			TOTAL_SLOTS = FUEL_SLOTS + OUTPUT_SLOTS;
 			

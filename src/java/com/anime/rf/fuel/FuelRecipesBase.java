@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.anime.basic.logger.ModLogger;
-import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -26,12 +25,12 @@ public class FuelRecipesBase {
 	protected Map<Integer, Integer> genTicksMap = new HashMap<Integer, Integer>();
 	
 	/** The maximum length of the specified type **/
-	protected int maxLengthInput = 1, maxLengthByproduct = 0;
+	protected int maxLengthInput = 3, maxLengthByproduct = 0;
 	
 	protected static FuelRecipesBase instance = new FuelRecipesBase();
 	
 	public FuelRecipesBase() {
-		addFuel(new ItemStack[]{new ItemStack(Items.COAL), new ItemStack(Items.REDSTONE), new ItemStack(Items.APPLE)}, new ItemStack[]{new ItemStack(Items.SUGAR, 2), new ItemStack(ModItems.CARBON_DUST, 2)}, 30, 600);
+		addFuel(new ItemStack[]{new ItemStack(Items.COAL), new ItemStack(Items.REDSTONE), new ItemStack(Items.APPLE)}, 30, 600);
 	}
 	
 	/**

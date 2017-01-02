@@ -173,7 +173,7 @@ public class RegistryHelper {
 		EntityRegistry.registerModEntity(entityClass, MainModReference.MODID + ":" + entityClass.getName().substring(6), id, modInstance, trackingRange, updateFreq, true, hexColorPrimary, hexColorSecondary);
 		RenderingRegistry.registerEntityRenderingHandler(entityClass, renderEntity);
 	}
-	
+
 	/**
 	 * Registers the specified fluid and adds a bucket for the fluid.
 	 * @param fluid The fluid that will be registered and that needs the bucket.
@@ -181,6 +181,14 @@ public class RegistryHelper {
 	public static void registerFluidAndAddBucket(Fluid fluid) {
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
+	}
+	
+	/**
+	 * Registers the specified fluid and adds a bucket for the fluid.
+	 * @param fluid The fluid that will be registered and that needs the bucket.
+	 */
+	public static void registerFluid(Fluid fluid) {
+		FluidRegistry.registerFluid(fluid);
 	}
 	
 	/**

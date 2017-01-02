@@ -7,9 +7,11 @@ import java.util.Map;
 
 import com.anime.basic.logger.ModLogger;
 import com.messorix.moleculecraft.base.init.ModAtoms;
+import com.messorix.moleculecraft.base.init.ModFluids;
 import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ModMolecules {
@@ -53,6 +55,12 @@ public class ModMolecules {
     		MOLECULES.put("lithiummagneseoxide", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Mn").setAmount(2)).addAtom(atoms.getModAtomBySymbol("O").setAmount(4)));
     		MOLECULES.put("lithiumironphosphateoxide", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Fe").setAmount(1)).addAtom(atoms.getModAtomBySymbol("P").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(4)));
     		MOLECULES.put("lithiumpolonium", createMolecule(1).addMolecule(createMolecule(8).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Po").setAmount(1))));
+    		MOLECULES.put("lithiumhexafluorophosphate", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("P").setAmount(1)).addAtom(atoms.getModAtomBySymbol("F").setAmount(6)));
+    		MOLECULES.put("lithiumtetrafluoroborate", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("B").setAmount(1)).addAtom(atoms.getModAtomBySymbol("F").setAmount(4)));
+    		MOLECULES.put("lithiumperchlorate", createMolecule(1).addAtom(atoms.getModAtomBySymbol("Li").setAmount(1)).addAtom(atoms.getModAtomBySymbol("Cl").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(4)));
+    		MOLECULES.put("ethylenecarbonate", createMolecule(1).addMolecule(createMolecule(2).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("H").setAmount(2)).addAtom(atoms.getModAtomBySymbol("O").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("O").setAmount(1))));
+    		MOLECULES.put("dimethylcarbonate", createMolecule(1).addAtom(atoms.getModAtomBySymbol("O").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addMolecule(createMolecule(2).addAtom(atoms.getModAtomBySymbol("O").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("H").setAmount(3))));
+    		MOLECULES.put("diethylcarbonate", createMolecule(1).addAtom(atoms.getModAtomBySymbol("O").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addMolecule(createMolecule(2).addAtom(atoms.getModAtomBySymbol("O").setAmount(1)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("H").setAmount(2)).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)).addAtom(atoms.getModAtomBySymbol("H").setAmount(3))));
     		
     		MOLECULES.put("graphite", createMolecule(5).addAtom(atoms.getModAtomBySymbol("C").setAmount(1)));
     		// TODO Add more Molecules
@@ -133,9 +141,17 @@ public class ModMolecules {
     	objectMolecules.put(new ItemStack(ModItems.LMO_ELECTRODE), getMoleculeByMaterial("lithiummagneseoxide"));
     	objectMolecules.put(new ItemStack(ModItems.LFP_ELECTRODE), getMoleculeByMaterial("lithiumironphosphateoxide"));
     	objectMolecules.put(new ItemStack(ModItems.LIPO_CASING), getMoleculeByMaterial("lithiumpolonium"));
+    	objectMolecules.put(new ItemStack(ModItems.LPF_SALT), getMoleculeByMaterial("lithiumhexafluorophosphate"));
+    	objectMolecules.put(new ItemStack(ModItems.LBF_SALT), getMoleculeByMaterial("lithiumtetrafluoroborate"));
+    	objectMolecules.put(new ItemStack(ModItems.LCL_SALT), getMoleculeByMaterial("lithiumperchlorate"));
     	
     	objectMolecules.put(new ItemStack(ModItems.GRAPHITE), getMoleculeByMaterial("graphite"));
     	ModLogger.logInfoMessage("Succesfully bound molecules to ItemStacks.");
+
+    	
+    	/*objectMolecules.put(new FluidStack(ModFluids.CHO_SOLVENT, 1000), getMoleculeByMaterial("ethylenecarbonate"));
+    	objectMolecules.put(new FluidStack(ModFluids.OCH_SOLVENT, 1000), getMoleculeByMaterial("dimethylcarbonate"));
+    	objectMolecules.put(new FluidStack(ModFluids.OC_SOLVENT, 1000), getMoleculeByMaterial("diethylcarbonate"));*/
     }
     
     /**
