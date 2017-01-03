@@ -1,0 +1,92 @@
+{
+	"forge_marker": 1,
+	
+	"defaults": {
+		"model": "moleculecraft:pipebase"
+	},
+
+	"variants": {
+		"inventory": {
+			"model": "moleculecraft:pipebase"
+		},
+		"north": {
+			"true": {
+				"submodel": {
+					"extension_north": {
+						"model": "moleculecraft:pipeextension",
+						"x": 90
+					}
+				}
+			},
+			"false":{
+				
+			}
+		},
+		"south": {
+			"true": {
+				"submodel": {
+					"extension_south": {
+						"model": "moleculecraft:pipeextension",
+						"x": 270
+					}
+				}
+			},
+			"false": {
+				
+			}
+		},
+		"west": {
+			"true": {
+				"submodel": {
+					"extension_west": {
+						"model": "moleculecraft:pipeextension",
+						"y": 90,
+						"x": 270
+					}
+				}
+			},
+			"false": {
+				
+			}
+		},
+		"east": {
+			"true": {
+				"submodel": {
+					"extension_east": {
+						"model": "moleculecraft:pipeextension",
+						"y": 90,
+						"x": 90
+					}
+				}
+			},
+			"false": {
+				
+			}
+		},
+		"up": {
+			"true": {
+				"submodel": {
+					"extension_up": {
+						"model": "moleculecraft:pipeextension"
+					}
+				}
+			},
+			"false": {
+				
+			}
+		},
+		"down": {
+			"true": {
+				"submodel": {
+					"extension_down": {
+						"model": "moleculecraft:pipeextension",
+						"x": 180
+					}
+				}
+			},
+			"false": {
+				
+			}
+		}
+	}
+}

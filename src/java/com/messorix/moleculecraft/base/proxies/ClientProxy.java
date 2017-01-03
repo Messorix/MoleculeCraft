@@ -2,6 +2,7 @@ package com.messorix.moleculecraft.base.proxies;
 
 import com.messorix.moleculecraft.base.MoleculecraftBase;
 import com.messorix.moleculecraft.base.events.ItemOverlayEvent;
+import com.messorix.moleculecraft.base.events.RenderSelectionEvent;
 import com.messorix.moleculecraft.wailaintegration.WailaConfig;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +24,7 @@ public class ClientProxy extends ServerProxy {
     public void init(FMLInitializationEvent e) {
         super.init(e);
         MinecraftForge.EVENT_BUS.register(new ItemOverlayEvent());
+        MinecraftForge.EVENT_BUS.register(new RenderSelectionEvent());
     	FMLInterModComms.sendMessage("Waila", "register", WailaConfig.class.getName() + ".callbackRegister");
 	}
 

@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.anime.basic.registry.RegistryHelper;
 import com.anime.rf.blocks.BlockGenerator;
+import com.anime.rf.blocks.EnergyPipe;
+import com.anime.rf.blocks.PipeBase;
+import com.anime.rf.blocks.PipeBase.EnumPipeType;
 import com.messorix.moleculecraft.base.blocks.BlockAcanthiteOre;
 import com.messorix.moleculecraft.base.blocks.BlockCassiteriteOre;
 import com.messorix.moleculecraft.base.blocks.BlockChalcociteOre;
@@ -28,6 +31,8 @@ public class ModBlocks
 	public static BlockMachine FLUX_GRINDER_ON;
 
 	public static Block GENERATOR_TEST;
+	public static Block PIPE_ENERGY;
+	public static Block PIPE_ENERGY_E;
 	
 	public static BlockOre CHALCOCITE_ORE;
 	public static BlockOre ACANTHITE_ORE;
@@ -41,7 +46,9 @@ public class ModBlocks
 		oreblocklist.add(ACANTHITE_ORE);
 		RegistryHelper.registerBlock(CASSITERITE_ORE = new BlockCassiteriteOre(), BlockCassiteriteOre.NAME);
 		oreblocklist.add(CASSITERITE_ORE);
-
+		
+		RegistryHelper.registerBlock(PIPE_ENERGY_E = new EnergyPipe(Material.IRON).setUnlocalizedName("energy_pipe"), "energy_pipe");
+		RegistryHelper.registerBlock(PIPE_ENERGY = new PipeBase(Material.IRON, EnumPipeType.ENERGY).setUnlocalizedName("pipe"), "pipe_base");
 		RegistryHelper.registerBlock(GENERATOR_TEST = new BlockGenerator(Material.IRON), "generator_test");
 		
 		
@@ -67,5 +74,7 @@ public class ModBlocks
     		RegistryHelper.registerBlockModel(block, 0);
     		
     	}
+    	RegistryHelper.registerBlockModel(PIPE_ENERGY_E, 0);
+    	RegistryHelper.registerBlockModel(PIPE_ENERGY, 0);
     }
 }

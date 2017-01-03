@@ -2,6 +2,7 @@ package com.messorix.moleculecraft.base;
 
 import com.anime.basic.MainModReference;
 import com.anime.basic.registry.RegistryHelper;
+import com.anime.rf.tileentity.TileEntityEnergyPipe;
 import com.anime.rf.tileentity.TileEntityRFGenerator;
 import com.messorix.moleculecraft.base.classes.ModMolecules;
 import com.messorix.moleculecraft.base.creativetabs.MoleculeCraftTab;
@@ -43,6 +44,7 @@ public class MoleculecraftBase
     public void init(FMLInitializationEvent e) {
     	proxy.init(e);
     	RegistryHelper.registerTileEntity(TileEntityRFGenerator.class);
+    	RegistryHelper.registerTileEntity(TileEntityEnergyPipe.class);
     }
 
     @EventHandler
