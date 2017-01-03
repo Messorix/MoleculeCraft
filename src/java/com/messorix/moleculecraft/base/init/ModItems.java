@@ -29,7 +29,7 @@ public class ModItems
 	public static ModItem GRAPHITE;
 	public static ModItem LIPO_CASING;
 	public static ModItem ELECTROLYTE;
-	public static ModItem LCL_SALT;
+	public static ModItem LCO_SALT;
 	public static ModItem LPF_SALT;
 	public static ModItem LBF_SALT;
 	
@@ -74,8 +74,8 @@ public class ModItems
 		itemlist.add(LIPO_CASING);
 		RegistryHelper.registerItem(ELECTROLYTE = new ItemElectrolyte(), ELECTROLYTE.name);
 		itemlist.add(ELECTROLYTE);
-		RegistryHelper.registerItem(LCL_SALT = new ItemSalts("lco_salt", "lco_salt"), LCL_SALT.name);
-		itemlist.add(LCL_SALT);
+		RegistryHelper.registerItem(LCO_SALT = new ItemSalts("lco_salt", "lco_salt"), LCO_SALT.name);
+		itemlist.add(LCO_SALT);
 		RegistryHelper.registerItem(LPF_SALT = new ItemSalts("lpf_salt", "lpf_salt"), LPF_SALT.name);
 		itemlist.add(LPF_SALT);
 		RegistryHelper.registerItem(LBF_SALT = new ItemSalts("lbf_salt", "lbf_salt"), LBF_SALT.name);

@@ -4,4 +4,4 @@
 	- negative electrode: graphite (solid)
 	- electrolyte
 		- lithium salt: LiPF6, LiBF4, LiClO4 (solid)
-		- organic solvent: (CH2O)2CO, OC(OCH3)2, OC(OCH2CH3)2 (liquid)
+		- organic solvent: (CH2O)2CO, OC(OCH3)2, OC(OCH2CH3)2 (liquid, used in crafting only)
