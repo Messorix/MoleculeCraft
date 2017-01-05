@@ -3,7 +3,7 @@ package com.anime.rf.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -19,6 +19,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -59,8 +60,9 @@ public class PipeBase extends Block {
 			facing = facing1;
 			if (checkinPos.equals(originalPos.offset(facing))) break;
 		}
+		if (world.getTileEntity(checkinPos) != null && world.getTileEntity(checkinPos).hasCapability(CapabilityEnergy.ENERGY, facing)) return true;
 		if (type == EnumPipeType.ITEM && (world.getTileEntity(checkinPos) instanceof ISidedInventory || world.getTileEntity(checkinPos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing))) return true;
-		if (type == EnumPipeType.ENERGY && world.getTileEntity(checkinPos) instanceof IEnergyConnection) return true;
+		if (type == EnumPipeType.ENERGY && world.getTileEntity(checkinPos) instanceof IEnergyProvider) return true;
 		if (type == EnumPipeType.FLUID && world.getTileEntity(checkinPos) instanceof IFluidHandler) return true;
 		if (world.getBlockState(checkinPos).getBlock() instanceof PipeBase) {
 			return ((PipeBase)world.getBlockState(checkinPos).getBlock()).getType() == type || ((PipeBase)world.getBlockState(checkinPos).getBlock()).getType() == EnumPipeType.ALL || type == EnumPipeType.ALL;

@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anime.basic.registry.RegistryHelper;
-import com.messorix.moleculecraft.base.items.*;
+import com.messorix.moleculecraft.base.items.ItemDusts;
+import com.messorix.moleculecraft.base.items.ItemElectrodes;
+import com.messorix.moleculecraft.base.items.ItemGraphite;
+import com.messorix.moleculecraft.base.items.ItemIngots;
+import com.messorix.moleculecraft.base.items.ItemLithiumIonBattery;
+import com.messorix.moleculecraft.base.items.ModItem;
+import com.messorix.moleculecraft.base.items.ModItemEnergy;
 
 public class ModItems 
 {
@@ -28,10 +34,10 @@ public class ModItems
 	public static ModItem LFP_ELECTRODE;
 	public static ModItem GRAPHITE;
 	public static ModItem LIPO_CASING;
-	public static ModItem ELECTROLYTE;
-	public static ModItem LCO_SALT;
-	public static ModItem LPF_SALT;
-	public static ModItem LBF_SALT;
+//	public static ModItem ELECTROLYTE;
+//	public static ModItem LCO_SALT;
+//	public static ModItem LPF_SALT;
+//	public static ModItem LBF_SALT;
 	
 	public static ModItemEnergy LITHIUM_ION_BATTERY;
 	
@@ -72,14 +78,14 @@ public class ModItems
 		itemlist.add(GRAPHITE);
 		RegistryHelper.registerItem(LIPO_CASING = new ModItem("lipo_casing", "lipo_casing"), LIPO_CASING.name);
 		itemlist.add(LIPO_CASING);
-		RegistryHelper.registerItem(ELECTROLYTE = new ItemElectrolyte(), ELECTROLYTE.name);
-		itemlist.add(ELECTROLYTE);
-		RegistryHelper.registerItem(LCO_SALT = new ItemSalts("lco_salt", "lco_salt"), LCO_SALT.name);
-		itemlist.add(LCO_SALT);
-		RegistryHelper.registerItem(LPF_SALT = new ItemSalts("lpf_salt", "lpf_salt"), LPF_SALT.name);
-		itemlist.add(LPF_SALT);
-		RegistryHelper.registerItem(LBF_SALT = new ItemSalts("lbf_salt", "lbf_salt"), LBF_SALT.name);
-		itemlist.add(LBF_SALT);
+//		RegistryHelper.registerItem(ELECTROLYTE = new ItemElectrolyte(), ELECTROLYTE.name);
+//		itemlist.add(ELECTROLYTE);
+//		RegistryHelper.registerItem(LCO_SALT = new ItemSalts("lco_salt", "lco_salt"), LCO_SALT.name);
+//		itemlist.add(LCO_SALT);
+//		RegistryHelper.registerItem(LPF_SALT = new ItemSalts("lpf_salt", "lpf_salt"), LPF_SALT.name);
+//		itemlist.add(LPF_SALT);
+//		RegistryHelper.registerItem(LBF_SALT = new ItemSalts("lbf_salt", "lbf_salt"), LBF_SALT.name);
+//		itemlist.add(LBF_SALT);
     }
     
     public void setItemModels()

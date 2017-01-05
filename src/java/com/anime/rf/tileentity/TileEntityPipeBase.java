@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public abstract class TileEntityPipeBase extends TileEntity implements ITickable {
 	
 	protected BlockPos currentPosition, lastPosition;
+	protected List<BlockPos> cachedPositions = new ArrayList<BlockPos>();
 	protected List<EnumFacing> from = new ArrayList<EnumFacing>();
 	protected int pipeSendCounter = 0;
 	
@@ -22,30 +23,38 @@ public abstract class TileEntityPipeBase extends TileEntity implements ITickable
 	@Override
 	public void onLoad() {
 		this.currentPosition = this.getPos();
-		this.lastPosition = this.getPos();
+		this.cachedPositions.add(this.getPos());
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setIntArray("currentPos", blockPosToIntArray(currentPosition));
-		compound.setIntArray("lastPos", blockPosToIntArray(lastPosition));
-		List<Integer> list = new ArrayList<Integer>();
-		for (EnumFacing facing : from) {
-			list.add(facing.getIndex());
-		}
-		compound.setIntArray("from", listToArray(list));
+//		compound.setIntArray("currentPos", blockPosToIntArray(currentPosition));
+//		NBTTagCompound positions = new NBTTagCompound();
+//		for (int i = 0; i < cachedPositions.size(); i++) {
+//			positions.setIntArray(Integer.toString(i), blockPosToIntArray(cachedPositions.get(i)));
+//		}
+//		positions.setInteger("size", cachedPositions.size());
+//		compound.setTag("positions", positions);
+//		List<Integer> list = new ArrayList<Integer>();
+//		for (EnumFacing facing : from) {
+//			list.add(facing.getIndex());
+//		}
+//		compound.setIntArray("from", listToArray(list));
 		return compound;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		currentPosition = intArrayToBlockPos(compound.getIntArray("currentPos"));
-		lastPosition = intArrayToBlockPos(compound.getIntArray("lastPos"));
-		for (int i : compound.getIntArray("from")) {
-			from.add(EnumFacing.VALUES[i]);
-		}
+//		currentPosition = intArrayToBlockPos(compound.getIntArray("currentPos"));
+//		NBTTagCompound positions = (NBTTagCompound) compound.getTag("positions");
+//		for (int i = 0; i < positions.getInteger("size"); i++) {
+//			cachedPositions.add(intArrayToBlockPos(positions.getIntArray(Integer.toString(i))));
+//		}
+//		for (int i : compound.getIntArray("from")) {
+//			from.add(EnumFacing.VALUES[i]);
+//		}
 	}
 	
 	public static int[] listToArray(List<Integer> list) {

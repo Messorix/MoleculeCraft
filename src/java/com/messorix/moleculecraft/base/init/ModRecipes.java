@@ -14,27 +14,27 @@ public class ModRecipes
 		
 		battery.setTagCompound(batteryCompound("lmo", "lpf", "cho"));
 
-		RecipeHelper.addCraftingRecipe(battery, 1, 0,
-				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
-						new char[]{'G', 'E', 'L', 'C'},
-						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
-				false);
+//		RecipeHelper.addCraftingRecipe(battery, 1, 0,
+//				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
+//						new char[]{'G', 'E', 'L', 'C'},
+//						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
+//				false);
 
 		battery.setTagCompound(batteryCompound("lmo", "lpf", "och"));
 		
-		RecipeHelper.addCraftingRecipe(battery, 1, 0,
-				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
-						new char[]{'G', 'E', 'L', 'C'},
-						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
-				false);
-
-		battery.setTagCompound(batteryCompound("lmo", "lpf", "oc"));
-		
-		RecipeHelper.addCraftingRecipe(battery, 1, 0,
-				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
-						new char[]{'G', 'E', 'L', 'C'},
-						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
-				false);
+//		RecipeHelper.addCraftingRecipe(battery, 1, 0,
+//				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
+//						new char[]{'G', 'E', 'L', 'C'},
+//						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
+//				false);
+//
+//		battery.setTagCompound(batteryCompound("lmo", "lpf", "oc"));
+//		
+//		RecipeHelper.addCraftingRecipe(battery, 1, 0,
+//				RecipeHelper.getShapedCrafting(new String[]{"CCC", "GEL", "CCC"},
+//						new char[]{'G', 'E', 'L', 'C'},
+//						new Object[]{ModItems.GRAPHITE, ModItems.ELECTROLYTE, ModItems.LMO_ELECTRODE, ModItems.LIPO_CASING}),
+//				false);
     }
 	
 	private NBTTagCompound batteryCompound(String posElectrode, String salt, String solvent) {

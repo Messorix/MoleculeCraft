@@ -35,3 +35,8 @@ tile.cassiterite_ore.name=Cassiterite Ore
 # machines
 tile.flux_furnace.name=Flux Furnace
 tile.flux_grinder.name=Flux Grinder
+
+# temp
+tile.pipe.name=Pipe
+tile.energy_pipe.name=Energy Pipe
+tile.generator.name=Generator Test

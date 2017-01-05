@@ -10,7 +10,6 @@ import com.messorix.moleculecraft.base.init.ModAtoms;
 import com.messorix.moleculecraft.base.init.ModItems;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ModMolecules {
@@ -140,9 +139,9 @@ public class ModMolecules {
     	objectMolecules.put(new ItemStack(ModItems.LMO_ELECTRODE), getMoleculeByMaterial("lithiummagneseoxide"));
     	objectMolecules.put(new ItemStack(ModItems.LFP_ELECTRODE), getMoleculeByMaterial("lithiumironphosphateoxide"));
     	objectMolecules.put(new ItemStack(ModItems.LIPO_CASING), getMoleculeByMaterial("lithiumpolonium"));
-    	objectMolecules.put(new ItemStack(ModItems.LPF_SALT), getMoleculeByMaterial("lithiumhexafluorophosphate"));
-    	objectMolecules.put(new ItemStack(ModItems.LBF_SALT), getMoleculeByMaterial("lithiumtetrafluoroborate"));
-    	objectMolecules.put(new ItemStack(ModItems.LCO_SALT), getMoleculeByMaterial("lithiumperchlorate"));
+//    	objectMolecules.put(new ItemStack(ModItems.LPF_SALT), getMoleculeByMaterial("lithiumhexafluorophosphate"));
+//    	objectMolecules.put(new ItemStack(ModItems.LBF_SALT), getMoleculeByMaterial("lithiumtetrafluoroborate"));
+//    	objectMolecules.put(new ItemStack(ModItems.LCO_SALT), getMoleculeByMaterial("lithiumperchlorate"));
     	
     	objectMolecules.put(new ItemStack(ModItems.GRAPHITE), getMoleculeByMaterial("graphite"));
     	ModLogger.logInfoMessage("Succesfully bound molecules to ItemStacks.");
