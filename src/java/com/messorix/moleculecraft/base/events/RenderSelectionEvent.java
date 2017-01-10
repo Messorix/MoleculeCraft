@@ -28,7 +28,6 @@ public class RenderSelectionEvent {
 		if (world.getBlockState(pos).getBlock() instanceof PipeBase) {
 			PipeBase pipe = (PipeBase) world.getBlockState(pos).getBlock();
 			List<AxisAlignedBB> collsion = pipe.addCollisionBoxToList(world.getBlockState(pos), world, pos);
-			GL11.glPushMatrix();
 			GL11.glTranslatef(pos.getX(), pos.getY(), pos.getZ());
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
@@ -45,7 +44,6 @@ public class RenderSelectionEvent {
             GlStateManager.depthMask(true);
             GlStateManager.enableTexture2D();
             GlStateManager.disableBlend();
-            GL11.glPopMatrix();
 			event.setCanceled(true);
 		}
 	}
