@@ -2,13 +2,16 @@ package com.anime.rf.tileentity;
 
 import java.util.List;
 
+import com.anime.basic.network.PacketSendingHelper;
 import com.anime.rf.blocks.PipeBase;
 import com.anime.rf.blocks.PipeBase.EnumPipeType;
 import com.anime.rf.network.EnergyNetwork;
-import com.messorix.moleculecraft.base.events.EnergyNetworkProvider;
+import com.anime.rf.network.EnergyNetworkProvider;
+import com.anime.rf.network.SyncEnergyStorageMessage;
 
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -45,13 +48,13 @@ public class TileEntityEnergyPipe extends TileEntityPipeBase implements IEnergyR
 
 	@Override
 	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-		System.out.println("Receiving energy");
 		List<EnergyNetwork> nets = worldObj.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(getPos());
-		if (nets.size() == 1) {
-			System.out.println("Capacity: " + nets.get(0).storage.getMaxEnergyStored() + " " + nets.get(0).storage.getEnergyStored() + " " + nets.get(0).storage.receiveEnergy(maxReceive, true));
-			return nets.get(0).storage.receiveEnergy(maxReceive, simulate);
-		} else System.out.println("Size is: " + nets.size());
-		return 1;
+		if (!nets.isEmpty()) {
+			int change = nets.get(0).storage.receiveEnergy(maxReceive, simulate);
+			PacketSendingHelper.sendToDimension(new SyncEnergyStorageMessage(worldObj.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).getNetworkID(nets.get(0)), nets.get(0).storage.writeToNBT(new NBTTagCompound())), worldObj.provider.getDimension());
+			return change;
+		}
+		return 0;
 	}
 	
 }

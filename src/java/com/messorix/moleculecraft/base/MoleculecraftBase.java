@@ -6,6 +6,12 @@ import com.anime.rf.events.PipeNetworkEventHandler;
 import com.anime.rf.network.EnergyNetwork.NetworkRegistry;
 import com.anime.rf.network.EnergyNetworkStorage;
 import com.anime.rf.network.INetwork;
+import com.anime.rf.network.SyncAllNetworksHandler;
+import com.anime.rf.network.SyncAllNetworksMessage;
+import com.anime.rf.network.SyncEnergyStorageHandler;
+import com.anime.rf.network.SyncEnergyStorageMessage;
+import com.anime.rf.network.SyncSpecificNetworkHandler;
+import com.anime.rf.network.SyncSpecificNetworkMessage;
 import com.anime.rf.tileentity.TileEntityEnergyPipe;
 import com.anime.rf.tileentity.TileEntityRFGenerator;
 import com.messorix.moleculecraft.base.classes.ModMolecules;
@@ -26,6 +32,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = MainModReference.MODID, name = MainModReference.NAME, version = MainModReference.VERSION)
 public class MoleculecraftBase 
@@ -41,10 +48,14 @@ public class MoleculecraftBase
     public static ModRecipes recipes = new ModRecipes();
     public static MoleculeCraftTab moleculeCraftTab = new MoleculeCraftTab();
     public static ModOreDictionary oreDict = new ModOreDictionary();
-
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
+        MainModReference.WRAPPER = net.minecraftforge.fml.common.network.NetworkRegistry.INSTANCE.newSimpleChannel(MainModReference.MODID);
+        MainModReference.WRAPPER.registerMessage(SyncSpecificNetworkHandler.class, SyncSpecificNetworkMessage.class, 0, Side.CLIENT);
+        MainModReference.WRAPPER.registerMessage(SyncEnergyStorageHandler.class, SyncEnergyStorageMessage.class, 1, Side.CLIENT);
+        MainModReference.WRAPPER.registerMessage(SyncAllNetworksHandler.class, SyncAllNetworksMessage.class, 2, Side.CLIENT);
         CapabilityManager.INSTANCE.register(INetwork.class, new EnergyNetworkStorage(), NetworkRegistry.class);
     }
 

@@ -1,6 +1,4 @@
-package com.messorix.moleculecraft.base.events;
-
-import com.anime.rf.network.INetwork;
+package com.anime.rf.network;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

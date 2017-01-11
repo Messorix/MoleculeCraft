@@ -1,6 +1,7 @@
 package com.messorix.moleculecraft.base.events;
 
 import com.anime.basic.MainModReference;
+import com.anime.rf.network.EnergyNetworkProvider;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;

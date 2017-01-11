@@ -2,7 +2,6 @@ package com.anime.basic;
 
 import com.anime.basic.network.GuiHandler;
 
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 public class MainModReference {
@@ -46,7 +45,7 @@ public class MainModReference {
 	/**
 	 * A SimpleNetworkWrapper instance, register to use packets.
 	 */
-	public static final SimpleNetworkWrapper WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+	public static SimpleNetworkWrapper WRAPPER;
 	
 	/**
 	 * Whether or not it should log when items are registered.

@@ -17,7 +17,6 @@ public class TESR extends TileEntitySpecialRenderer<TileEntityFluxFurnace> {
 	
 	@Override
     public void renderTileEntityAt(TileEntityFluxFurnace te, double x, double y, double z, float partialTicks, int destroyStage) {
-		System.out.println(frame);
 		frame++;
 		if (frame > 550) frame = 0;
 		Tessellator tessellator = Tessellator.getInstance();

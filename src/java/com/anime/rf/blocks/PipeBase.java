@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anime.rf.network.EnergyNetwork;
-import com.messorix.moleculecraft.base.events.EnergyNetworkProvider;
+import com.anime.rf.network.EnergyNetworkProvider;
 
 import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.Block;
@@ -78,36 +78,29 @@ public class PipeBase extends Block {
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		if (!world.isRemote) {
-			System.out.println("Pipe placed");
 			List<EnergyNetwork> nets = new ArrayList<EnergyNetwork>();
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos.offset(facing))) {
 					nets.add(net);
 				}
 			}
-			System.out.println("Surrounding networks added: " + nets);
 			EnergyNetwork net = null;
 			if (nets.isEmpty()) {
 				net = EnergyNetwork.createNetwork();
 				net.addConnection(world, pos);
 				world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).addNetwork(net);
-				System.out.println("Network created");
 			} else if (allTheSame(nets)) {
 				net = nets.get(0);
 				net.addConnection(world, pos);
-				System.out.println("Network has new position");
 			} else {
 				net = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).combineNetworks(world, nets);
 				net.addConnection(world, pos);
-				System.out.println("Networks merged");
 			}
-			System.out.println("Network: " + net.connections);
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (canConnectTo(world, pos.offset(facing), pos)) {
 					if (!net.connections.contains(pos.offset(facing))) net.addConnection(world, pos.offset(facing));
 				}
 			}
-			System.out.println("Network has surrounding pipe connections: " + net.connections);
 		}
 	}
 	
@@ -115,7 +108,6 @@ public class PipeBase extends Block {
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		super.breakBlock(world, pos, state);
 		if (!world.isRemote) {
-			System.out.println("Block broken");
 			List<EnergyNetwork> nets = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos);
 			if (!nets.isEmpty()) {
 				for (EnumFacing facing : EnumFacing.VALUES) {
@@ -124,14 +116,12 @@ public class PipeBase extends Block {
 					for (EnumFacing face : EnumFacing.VALUES) {
 						if (canConnectTo(world, pos2.offset(face), pos2)) noConnections = false;
 					}
-					if (noConnections) {
-						System.out.println("No connections");
+					if (noConnections && !(world.getBlockState(pos2).getBlock() instanceof PipeBase)) {
 						for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos2)) {
 							net.removeConnection(world, pos2);
 							world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).separateNetworks(world, net, new ArrayList<BlockPos>());
 						}
 					} else {
-						System.out.println("Has Connections");
 						List<EnergyNetwork> networks = new ArrayList<EnergyNetwork>();
 						for (EnumFacing face : EnumFacing.VALUES) {
 							for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos2.offset(face))) {
@@ -153,30 +143,26 @@ public class PipeBase extends Block {
 		}
 	}
 	
-//	@Override
-//	public void onNeighborChange(IBlockAccess worldIn, BlockPos pos, BlockPos neighbor) {
-//		if (worldIn instanceof World) {
-//			System.out.println("Neighbor change is World based.");
-//			World world = (World) worldIn;
-//			if (!world.isRemote) {
-//				List<EnergyNetwork> nets = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos);
-//				if (canConnectTo(world, neighbor, pos)) {
-//					if (world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(neighbor).isEmpty()) {
-//						for (EnergyNetwork net : nets) {
-//							net.addConnection(world, neighbor);
-//						}
-//					}
-//				} else {
-//					System.out.println("Can't connect to.");
-//					for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(neighbor)) {
-//						net.removeConnection(world, neighbor);
-//						world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).separateNetworks(worldIn, net, new ArrayList<BlockPos>());
-//					}
-//					// Block Destroyed
-//				}
-//			}
-//		}
-//	}
+	// TODO: Remove after it has been determined that it is not neccesary.
+	@Override
+	public void onNeighborChange(IBlockAccess worldIn, BlockPos pos, BlockPos neighbor) {
+		if (worldIn instanceof World) {
+			System.out.println("Neighbor change is World based.");
+			World world = (World) worldIn;
+			if (!world.isRemote) {
+				List<EnergyNetwork> nets = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos);
+				if (canConnectTo(world, neighbor, pos)) {
+					if (world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(neighbor).isEmpty()) {
+						for (EnergyNetwork net : nets) {
+							net.addConnection(world, neighbor);
+						}
+					}
+				} else {
+					System.out.println("Can't connect to.");
+				}
+			}
+		}
+	}
 	
 	protected boolean allTheSame(List<EnergyNetwork> networks) {
 		if (networks.size() == 1) return true;
