@@ -3,14 +3,19 @@ package com.anime.rf.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import cofh.api.energy.IEnergyProvider;
+import com.anime.rf.network.EnergyNetwork;
+import com.messorix.moleculecraft.base.events.EnergyNetworkProvider;
+
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -62,7 +67,7 @@ public class PipeBase extends Block {
 		}
 		if (world.getTileEntity(checkinPos) != null && world.getTileEntity(checkinPos).hasCapability(CapabilityEnergy.ENERGY, facing)) return true;
 		if (type == EnumPipeType.ITEM && (world.getTileEntity(checkinPos) instanceof ISidedInventory || world.getTileEntity(checkinPos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing))) return true;
-		if (type == EnumPipeType.ENERGY && world.getTileEntity(checkinPos) instanceof IEnergyProvider) return true;
+		if (type == EnumPipeType.ENERGY && world.getTileEntity(checkinPos) instanceof IEnergyHandler) return true;
 		if (type == EnumPipeType.FLUID && world.getTileEntity(checkinPos) instanceof IFluidHandler) return true;
 		if (world.getBlockState(checkinPos).getBlock() instanceof PipeBase) {
 			return ((PipeBase)world.getBlockState(checkinPos).getBlock()).getType() == type || ((PipeBase)world.getBlockState(checkinPos).getBlock()).getType() == EnumPipeType.ALL || type == EnumPipeType.ALL;
@@ -71,19 +76,133 @@ public class PipeBase extends Block {
 	}
 	
 	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if (!world.isRemote) {
+			System.out.println("Pipe placed");
+			List<EnergyNetwork> nets = new ArrayList<EnergyNetwork>();
+			for (EnumFacing facing : EnumFacing.VALUES) {
+				for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos.offset(facing))) {
+					nets.add(net);
+				}
+			}
+			System.out.println("Surrounding networks added: " + nets);
+			EnergyNetwork net = null;
+			if (nets.isEmpty()) {
+				net = EnergyNetwork.createNetwork();
+				net.addConnection(world, pos);
+				world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).addNetwork(net);
+				System.out.println("Network created");
+			} else if (allTheSame(nets)) {
+				net = nets.get(0);
+				net.addConnection(world, pos);
+				System.out.println("Network has new position");
+			} else {
+				net = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).combineNetworks(world, nets);
+				net.addConnection(world, pos);
+				System.out.println("Networks merged");
+			}
+			System.out.println("Network: " + net.connections);
+			for (EnumFacing facing : EnumFacing.VALUES) {
+				if (canConnectTo(world, pos.offset(facing), pos)) {
+					if (!net.connections.contains(pos.offset(facing))) net.addConnection(world, pos.offset(facing));
+				}
+			}
+			System.out.println("Network has surrounding pipe connections: " + net.connections);
+		}
+	}
+	
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		super.breakBlock(world, pos, state);
+		if (!world.isRemote) {
+			System.out.println("Block broken");
+			List<EnergyNetwork> nets = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos);
+			if (!nets.isEmpty()) {
+				for (EnumFacing facing : EnumFacing.VALUES) {
+					BlockPos pos2 = pos.offset(facing);
+					boolean noConnections = true;
+					for (EnumFacing face : EnumFacing.VALUES) {
+						if (canConnectTo(world, pos2.offset(face), pos2)) noConnections = false;
+					}
+					if (noConnections) {
+						System.out.println("No connections");
+						for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos2)) {
+							net.removeConnection(world, pos2);
+							world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).separateNetworks(world, net, new ArrayList<BlockPos>());
+						}
+					} else {
+						System.out.println("Has Connections");
+						List<EnergyNetwork> networks = new ArrayList<EnergyNetwork>();
+						for (EnumFacing face : EnumFacing.VALUES) {
+							for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos2.offset(face))) {
+								if (!networks.contains(net)) networks.add(net);
+							}
+						}
+						if (!networks.isEmpty()) {
+							for (EnergyNetwork net : nets) {
+								if (!networks.contains(net)) {
+									net.removeConnection(world, pos2);
+								}
+								net.removeConnection(world, pos);
+								world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).separateNetworks(world, net, new ArrayList<BlockPos>());
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+//	@Override
+//	public void onNeighborChange(IBlockAccess worldIn, BlockPos pos, BlockPos neighbor) {
+//		if (worldIn instanceof World) {
+//			System.out.println("Neighbor change is World based.");
+//			World world = (World) worldIn;
+//			if (!world.isRemote) {
+//				List<EnergyNetwork> nets = world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(pos);
+//				if (canConnectTo(world, neighbor, pos)) {
+//					if (world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(neighbor).isEmpty()) {
+//						for (EnergyNetwork net : nets) {
+//							net.addConnection(world, neighbor);
+//						}
+//					}
+//				} else {
+//					System.out.println("Can't connect to.");
+//					for (EnergyNetwork net : world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).networksContainingPos(neighbor)) {
+//						net.removeConnection(world, neighbor);
+//						world.getCapability(EnergyNetworkProvider.ENERGY_NETWORK_CAPABILITY, null).separateNetworks(worldIn, net, new ArrayList<BlockPos>());
+//					}
+//					// Block Destroyed
+//				}
+//			}
+//		}
+//	}
+	
+	protected boolean allTheSame(List<EnergyNetwork> networks) {
+		if (networks.size() == 1) return true;
+		List<Boolean> booleans = new ArrayList<Boolean>();
+		for (EnergyNetwork net : networks) {
+			if (net.equals(networks.get(0))) {
+				booleans.add(true);
+			} else booleans.add(false);
+		}
+		return !booleans.contains(false);
+	}
+	
+	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
 		Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, NO_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(UP_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, UP_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(DOWN_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, DOWN_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(NORTH_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(SOUTH_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(WEST_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_CONNECTIONS);
-		if (state.getActualState(worldIn, pos).getValue(EAST_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(UP_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, UP_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(DOWN_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, DOWN_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(NORTH_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(SOUTH_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(WEST_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_CONNECTIONS);
+		if (state.getActualState(world, pos).getValue(EAST_CONNECTION).booleanValue() == true) Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_CONNECTIONS);
 	}
 	
 	public List<AxisAlignedBB> addCollisionBoxToList(IBlockState state, World world, BlockPos pos) {
@@ -99,33 +218,28 @@ public class PipeBase extends Block {
 	}
 	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess world, BlockPos pos) {
 		return NO_CONNECTIONS;
 	}
 	
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World world, BlockPos pos) {
 		return NO_CONNECTIONS;
 	}
 	
 	@Override
 	@SuppressWarnings("deprecation")
-	public RayTraceResult collisionRayTrace(IBlockState state, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
-		for (AxisAlignedBB aabb : addCollisionBoxToList(state, worldIn, pos)) {
+	public RayTraceResult collisionRayTrace(IBlockState state, World world, BlockPos pos, Vec3d start, Vec3d end) {
+		for (AxisAlignedBB aabb : addCollisionBoxToList(state, world, pos)) {
 			RayTraceResult trace = rayTrace(pos, start, end, aabb);
 			if (trace != null) return trace;
 		}
-		return super.collisionRayTrace(state, worldIn, pos, start, end);
-	}
-	
-	@Override
-	public boolean isFullBlock(IBlockState state) {
-		return getCollisionBoundingBox(state, null, null) == FULL_BLOCK_AABB;
+		return super.collisionRayTrace(state, world, pos, start, end);
 	}
 	
 	@Override
 	public boolean isFullCube(IBlockState state) {
-		return isFullBlock(state);
+		return false;
 	}
 	
 	@Override
